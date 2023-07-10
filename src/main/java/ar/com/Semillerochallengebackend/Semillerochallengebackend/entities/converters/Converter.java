@@ -8,23 +8,30 @@ import org.springframework.expression.ParseException;
 
 public abstract class Converter<E extends Object, D extends Object> {
 
-	@Autowired
-	protected ModelMapper modelMapper;
+    protected ModelMapper modelMapper;
 
-	public abstract D entityToDto(E entity);
+    @Autowired
+    public Converter(ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
+    }
 
-	public abstract E dtoToEntity(D dto) throws ParseException;
+    public abstract D entityToDto(E entity);
 
-	public List<D> entitiesToDto(List<E> entities) {
-		List<D> list = new ArrayList<>();
-		entities.forEach((aux) -> list.add(entityToDto(aux)));
-		return list;
-	};
+    public abstract E dtoToEntity(D dto) throws ParseException;
+
+    public List<D> entitiesToDto(List<E> entities) {
+        List<D> list = new ArrayList<>();
+        entities.forEach((aux) -> list.add(entityToDto(aux)));
+        return list;
+    }
+
+    ;
 
 	public List<E> dtosToEntities(List<D> dtos) {
-		List<E> list = new ArrayList<>();
-		dtos.forEach((aux) -> list.add(dtoToEntity(aux)));
-		return list;
-	};
+        List<E> list = new ArrayList<>();
+        dtos.forEach((aux) -> list.add(dtoToEntity(aux)));
+        return list;
+    }
+;
 
 }

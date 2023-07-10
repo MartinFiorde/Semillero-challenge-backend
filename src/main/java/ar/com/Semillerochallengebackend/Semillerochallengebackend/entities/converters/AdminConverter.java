@@ -2,19 +2,25 @@ package ar.com.Semillerochallengebackend.Semillerochallengebackend.entities.conv
 
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.entities.Admin;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.entities.dto.AdminDTO;
-import lombok.AllArgsConstructor;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.UserRole;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.utilities.StringUtility;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ParseException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component("AdminConverter")
-@AllArgsConstructor(onConstructor = @__(
-        @Autowired))
 public class AdminConverter extends Converter<Admin, AdminDTO> {
 
     private PasswordEncoder encoder;
 
+    @Autowired
+    public AdminConverter(PasswordEncoder encoder, ModelMapper modelMapper) {
+        super(modelMapper);
+        this.encoder = encoder;
+    }
+    
     @Override
     public AdminDTO entityToDto(Admin entity) {
         AdminDTO dto = modelMapper.map(entity, AdminDTO.class);
@@ -26,11 +32,9 @@ public class AdminConverter extends Converter<Admin, AdminDTO> {
     @Override
     public Admin dtoToEntity(AdminDTO dto) throws ParseException {
         Admin entity = modelMapper.map(dto, Admin.class);
-        if (dto.getPassword() != null) {
-            dto.setPassword(encoder.encode(dto.getPassword()));
-        }
+        if (dto.getPassword() != null) dto.setPassword(encoder.encode(dto.getPassword()));
         entity = modelMapper.map(dto, Admin.class);
-        if (dto.getId() != null) entity.setId(dto.getId());
+        if (StringUtility.notNullEmpty(dto.getRole())) entity.setRole(UserRole.valueOf(dto.getRole()));
         return entity;
     }
 }

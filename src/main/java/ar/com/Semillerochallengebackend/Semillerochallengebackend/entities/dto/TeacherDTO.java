@@ -17,4 +17,10 @@ public class TeacherDTO extends UserDTO {
 
     private List<CourseDTO> courses;
 
+    public TeacherDTO(String fullName, List<CourseDTO> courses, String id, boolean active, String userName, String email, String password, String role) {
+        super(id, active, userName, email, password, role);
+        this.fullName = fullName;
+        this.courses = courses;
+    }
+
 }

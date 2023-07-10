@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 //@JsonInclude(Include.NON_NULL)
 public class StudentDTO extends UserDTO {
-    
+
     private String firstNname;
 
     private String lastName;
@@ -27,5 +27,16 @@ public class StudentDTO extends UserDTO {
     private String discordUser;
 
     private List<CourseDTO> courses;
-    
+
+    public StudentDTO(String firstNname, String lastName, String dni, LocalDate startDate, String gmailUser, String discordUser, List<CourseDTO> courses, String id, boolean active, String userName, String email, String password, String role) {
+        super(id, active, userName, email, password, role);
+        this.firstNname = firstNname;
+        this.lastName = lastName;
+        this.dni = dni;
+        this.startDate = startDate;
+        this.gmailUser = gmailUser;
+        this.discordUser = discordUser;
+        this.courses = courses;
+    }
+
 }

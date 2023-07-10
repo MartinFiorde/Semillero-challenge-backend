@@ -3,7 +3,7 @@ package ar.com.Semillerochallengebackend.Semillerochallengebackend.enums;
 // Como usar Enums en el front para generar listas desplegables: https://www.baeldung.com/thymeleaf-enums
 // Otro tutorial del tema: https://frontbackend.com/thymeleaf/using-enums-in-thymeleaf
 public enum CourseStatus {
-    PLANNED("Planificado"), 
+    PROGRAMED("Programado"), 
     IN_PROGRESS("En progreso"), 
     CANCELLED("Cancelado"), 
     FINISHED("Terminado");
