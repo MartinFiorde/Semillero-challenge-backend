@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-//@JsonInclude(Include.NON_NULL)
+@JsonInclude(Include.NON_NULL)
 public final class CourseDTO {
     
     private String id;

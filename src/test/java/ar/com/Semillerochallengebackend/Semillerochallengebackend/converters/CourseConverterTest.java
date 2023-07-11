@@ -25,18 +25,15 @@ public class CourseConverterTest {
     @Test
     @DisplayName("It should turn CourseDTO into a valid Course Entity")
     public void testDtoToEntity() {
-        System.out.println("dtoToEntity");
-
         // ARRANGE - Setting up the data that required for the test case
+        Course expectedResult = new Course(null, true, "Java Inicial", 1, LocalDate.parse("2023-07-30"), CourseStatus.PROGRAMED, CourseTurn.MORNING, "curso inicial de java", null, null);
         CourseDTO dto = new CourseDTO(null, true, "Java Inicial", 1, LocalDate.parse("2023-07-30"), "PROGRAMED", "MORNING", "curso inicial de java", null, null);
 
         // ACT - Calling a Method/Unit that is being tested
         Course result = courseConverter.dtoToEntity(dto);
 
         // ASSERT - Verify that the expected result is correct or not
-        Course expectedResult = new Course(null, true, "Java Inicial", 1, LocalDate.parse("2023-07-30"), CourseStatus.PROGRAMED, CourseTurn.MORNING, "curso inicial de java", null, null);
         assertEquals(expectedResult, result);
         assertNotNull(expectedResult);
-        //assertEquals(1, list.size());
     }
 }

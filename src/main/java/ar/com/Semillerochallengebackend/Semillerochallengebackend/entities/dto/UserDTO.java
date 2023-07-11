@@ -1,5 +1,9 @@
 package ar.com.Semillerochallengebackend.Semillerochallengebackend.entities.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import java.time.LocalDateTime;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,18 +11,31 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(Include.NON_NULL)
 public class UserDTO {
     
-    protected String id;
+    private String id;
 
-    protected boolean active = true;
+    private boolean active = true;
+    
+    private LocalDateTime registrationDate;
 
-    protected String userName;
+    private String email;
 
-    protected String email;
+    private String password;
 
-    protected String password;
+    private String role;
+    
+    private String firstName;
 
-    protected String role;
+    private String lastName;
+
+    private String dni;
+
+    private String gmailUser;
+
+    private String discordUser;
+
+    private List<CourseDTO> courses;
     
 }

@@ -1,46 +1,64 @@
 package ar.com.Semillerochallengebackend.Semillerochallengebackend.entities;
 
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.UserRole;
+import java.time.LocalDateTime;
+import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import lombok.AccessLevel;
+import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 
-@Getter
-@Setter
-@AllArgsConstructor
+@Entity
+@Data
 @NoArgsConstructor
-@MappedSuperclass
-public abstract class User {
+@AllArgsConstructor
+public class User {
 
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    // @Setter(value = AccessLevel.NONE)
     @Column(nullable = false)
-    protected String id;
+    private String id;
 
     @Column(columnDefinition = "Bit(1) default true")
-    protected boolean active = true;
+    private boolean active = true;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime registrationDate;
 
     @Column(length = 32)
-    protected String userName;
-
-    @Column(length = 32)
-    protected String email;
+    private String email;
 
     @Column(length = 64)
-    protected String password;
+    private String password;
 
     @Enumerated(EnumType.STRING)
-    protected UserRole role;
+    private UserRole role;
+
+    @Column(length = 32)
+    private String firstName;
+
+    @Column(length = 32)
+    private String lastName;
+
+    @Column(length = 8)
+    private String dni;
+
+    @Column(length = 64)
+    private String gmailUser;
+
+    @Column(length = 32)
+    private String discordUser;
+
+    @OneToMany
+    private List<Course> courses;
 
 }

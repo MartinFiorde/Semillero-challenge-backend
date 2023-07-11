@@ -13,9 +13,11 @@ public interface CourseRepository extends JpaRepository<Course, String> {
     @Query(value = "SELECT * FROM course WHERE course.active = 1", nativeQuery = true)
     public List<Course> getAllActive();
 
-    public List<Course> findByTitle(String title);
+    public List<Course> findByTitle(String search);
     
-    @Query(value = "SELECT * FROM course WHERE course.title LIKE %:title%", nativeQuery = true)
-    public List<Course> findLikeTitle(@Param("title") String title);
+    public List<Course> findByTeacherId(String search);
     
+    @Query(value = "SELECT * FROM course WHERE course.title LIKE %:search%", nativeQuery = true)
+    public List<Course> findLikeTitle(@Param("search") String search);
+
 }

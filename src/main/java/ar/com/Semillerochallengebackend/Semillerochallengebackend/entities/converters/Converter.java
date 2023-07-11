@@ -25,13 +25,9 @@ public abstract class Converter<E extends Object, D extends Object> {
         return list;
     }
 
-    ;
-
-	public List<E> dtosToEntities(List<D> dtos) {
+    public List<E> dtosToEntities(List<D> dtos) {
         List<E> list = new ArrayList<>();
         dtos.forEach((aux) -> list.add(dtoToEntity(aux)));
         return list;
     }
-;
-
 }
