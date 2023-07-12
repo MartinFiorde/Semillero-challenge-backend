@@ -40,14 +40,14 @@ public class UserValidator {
         throw new ServiceRuntimeException("El rol ingresado no es válido.");
     }
 
-    public String validatePasswords(String pass, String pass2) throws ServiceRuntimeException {
-        if (StringUtils.nullOrEmpty(pass) || pass.trim().length() < 4) {
+    public String validatePasswords(String password, String passwordConfirm) throws ServiceRuntimeException {
+        if (StringUtils.nullOrEmpty(password) || password.trim().length() < 4) {
             throw new ServiceRuntimeException("La clave debe tener 4 o más carácteres.");
         }
-        if (!pass.equals(pass2)) {
+        if (!password.equals(passwordConfirm)) {
             throw new ServiceRuntimeException("Las claves no coinciden.");
         }
-        return pass;
+        return password;
     }
 
     public String validateGenericString(String string) throws ServiceRuntimeException {

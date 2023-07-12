@@ -41,8 +41,8 @@ public class UserService implements UserServiceInterface, UserDetailsService {
 
     // METHODS
     @Override
-    public UserDTO register(UserDTO dto, String pass2) throws ServiceRuntimeException {
-        User user = userConverter.dtoToEntity(userValidation.validateRegister(dto, pass2));
+    public UserDTO register(UserDTO dto, String passwordConfirm) throws ServiceRuntimeException {
+        User user = userConverter.dtoToEntity(userValidation.validateRegister(dto, passwordConfirm));
         userRepository.save(user);
         return userConverter.entityToDto(user);
     }
@@ -91,10 +91,10 @@ public class UserService implements UserServiceInterface, UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email).isEmpty() ? null : userRepository.findByEmail(email).get(0);
         try {
-            if (user == null) throw new ServiceRuntimeException("Usuario no encontrado");
+            if (user == null) throw new ServiceRuntimeException("User not found");
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
-            throw new UsernameNotFoundException("Usuario no encontrado");
+            throw new UsernameNotFoundException("User not found");
         }
         List<GrantedAuthority> permissions = new ArrayList();
         GrantedAuthority rolePermissions = new SimpleGrantedAuthority("ROLE_" + user.getRole().toString());

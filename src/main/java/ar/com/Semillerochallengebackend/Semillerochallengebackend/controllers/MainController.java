@@ -50,9 +50,9 @@ public class MainController {
 
     @PostMapping(REGISTER)
     @PreAuthorize("permitAll()")
-    public String cargarUsuario(ModelMap model, @ModelAttribute UserDTO dto, @RequestParam String pass2) {
+    public String cargarUsuario(ModelMap model, @ModelAttribute UserDTO dto, @RequestParam String passwordConfirm) {
         try {
-            userService.register(dto, pass2);
+            userService.register(dto, passwordConfirm);
             model.put("msg", "Se ha registrado correctamente!");
             model.put("dto", new UserDTO());
             return "user/register.html";
