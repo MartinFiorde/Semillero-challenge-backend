@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 public class CourseConverter extends Converter<Course, CourseDTO> {
 
     @Autowired
-    public CourseConverter(ModelMapper modelMapper) {
-        super(modelMapper);
+    public CourseConverter() {
+        super();
     }
      
     @Override

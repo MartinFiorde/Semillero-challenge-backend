@@ -19,15 +19,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class UserConverterTest {
 
     @InjectMocks
-    private UserConverter adminConverter = new UserConverter(new BCryptPasswordEncoder(), new ModelMapper());
+    private UserConverter adminConverter = new UserConverter();
 
     @Test
     @DisplayName("It should turn UserDTO into a valid User Entity with encrypted password and empty list of courses")
     public void testDtoToEntity() {
         System.out.println("dtoToEntity");
 
-        User expectedResult = new User(null, true, LocalDateTime.parse("2023-07-30"), "martinlirio@gmail.com", null, UserRole.ADMIN, "Martín", "Fiordelisi", "35511912", "martin.lirio@gmail.com", "Soul6515", new ArrayList<>());
-        UserDTO dto = new UserDTO(null, true, LocalDateTime.parse("2023-07-30"), "martinlirio@gmail.com", "12345678", "ADMIN", "Martín", "Fiordelisi", "35511912", "martin.lirio@gmail.com", "Soul6515", new ArrayList<>());
+        User expectedResult = new User(null, true, LocalDateTime.parse("2023-07-30T00:00:00"), "martinlirio@gmail.com", null, UserRole.ADMIN, "Martín", "Fiordelisi", "35511912", "martin.lirio@gmail.com", "Soul6515", new ArrayList<>());
+        UserDTO dto = new UserDTO(null, true, LocalDateTime.parse("2023-07-30T00:00:00"), "martinlirio@gmail.com", "12345678", "ADMIN", "Martín", "Fiordelisi", "35511912", "martin.lirio@gmail.com", "Soul6515", new ArrayList<>());
 
         User result = adminConverter.dtoToEntity(dto);
 

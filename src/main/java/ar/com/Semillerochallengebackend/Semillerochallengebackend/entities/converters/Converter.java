@@ -11,8 +11,8 @@ public abstract class Converter<E extends Object, D extends Object> {
     protected ModelMapper modelMapper;
 
     @Autowired
-    public Converter(ModelMapper modelMapper) {
-        this.modelMapper = modelMapper;
+    public Converter() {
+        this.modelMapper = new ModelMapper();
     }
 
     public abstract D entityToDto(E entity);

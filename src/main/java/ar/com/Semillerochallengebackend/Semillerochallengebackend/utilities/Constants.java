@@ -5,6 +5,7 @@ public final class Constants {
     public static final String ERROR = "error";
 
     //Root paths
+    public static final String INDEX = "/index";
     public static final String USER = "/user";
     public static final String COURSE = "/course";
 

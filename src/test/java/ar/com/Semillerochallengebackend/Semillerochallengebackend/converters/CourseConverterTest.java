@@ -20,7 +20,7 @@ import org.modelmapper.ModelMapper;
 public class CourseConverterTest {
 
     @InjectMocks
-    private CourseConverter courseConverter = new CourseConverter(new ModelMapper());
+    private CourseConverter courseConverter = new CourseConverter();
     
     @Test
     @DisplayName("It should turn CourseDTO into a valid Course Entity")
