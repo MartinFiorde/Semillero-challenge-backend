@@ -17,6 +17,8 @@ public interface UserRepository extends JpaRepository<User, String> {
     public List<User> findByFirstName(String search);
 
     public List<User> findByLastName(String search);
+    
+    public List<User> findByEmail(String search);
 
     @Query(value = "SELECT * FROM user "
             + "WHERE user.first_name LIKE %:search% "

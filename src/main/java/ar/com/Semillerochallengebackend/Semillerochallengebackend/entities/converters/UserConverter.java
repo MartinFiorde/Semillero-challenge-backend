@@ -7,18 +7,16 @@ import ar.com.Semillerochallengebackend.Semillerochallengebackend.utilities.Stri
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ParseException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component("UserConverter")
 public class UserConverter extends Converter<User, UserDTO> {
  
-    private PasswordEncoder encoder;
-
     @Autowired
-    public UserConverter(PasswordEncoder encoder, ModelMapper modelMapper) {
-        super(modelMapper);
-        this.encoder = encoder;
+    public UserConverter() {
+        super();
     }
     
     @Override
@@ -32,9 +30,9 @@ public class UserConverter extends Converter<User, UserDTO> {
     @Override
     public User dtoToEntity(UserDTO dto) throws ParseException {
         User entity = modelMapper.map(dto, User.class);
-        if (dto.getPassword() != null) dto.setPassword(encoder.encode(dto.getPassword()));
+        if (dto.getPassword() != null) dto.setPassword(new BCryptPasswordEncoder().encode(dto.getPassword()));
         entity = modelMapper.map(dto, User.class);
-        if (StringUtility.notNullEmpty(dto.getRole())) entity.setRole(UserRole.valueOf(dto.getRole()));
+        if (StringUtility.nullOrEmpty(dto.getRole())) entity.setRole(UserRole.valueOf(dto.getRole()));
         return entity;
     }
 }

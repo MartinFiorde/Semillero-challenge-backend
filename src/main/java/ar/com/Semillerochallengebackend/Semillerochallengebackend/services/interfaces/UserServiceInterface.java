@@ -9,7 +9,7 @@ import ar.com.Semillerochallengebackend.Semillerochallengebackend.errors.Service
 public interface UserServiceInterface extends CRUDServiceInterface<UserDTO>{
     
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
-    public UserDTO register(String firstName, String lastName, String email, String pass, String pass2) throws ServiceRuntimeException;
+    public UserDTO register(UserDTO dto, String pass2) throws ServiceRuntimeException;
     
     @Transactional(readOnly = true)
     public List<UserDTO> getStudentsByCourse(String courseId);
