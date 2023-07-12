@@ -1,9 +1,8 @@
 package ar.com.Semillerochallengebackend.Semillerochallengebackend.controllers;
 
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.UserDTO;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.REGISTER;
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.errors.ServiceRuntimeException;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.services.UserService;
+import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.REGISTER;
 import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.INDEX;
 import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.LOGIN;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping
 @PreAuthorize("permitAll()")
+//@PreAuthorize("isAuthenticated()")
+//@PreAuthorize("hasAnyRole('ADMIN','ADMIN')")
 public class MainController {
 
     private UserService userService;
@@ -32,7 +33,7 @@ public class MainController {
     @GetMapping("/")
     @PreAuthorize("permitAll()")
     public String empty() {
-        return "redirect:"+INDEX;
+        return "redirect:" + INDEX;
     }
 
     @GetMapping(INDEX)
@@ -43,19 +44,18 @@ public class MainController {
 
     @GetMapping(REGISTER)
     @PreAuthorize("permitAll()")
-    public String formularioUsuario(ModelMap model, @RequestParam(required = false) String idSesion) throws ServiceRuntimeException {
+    public String registerUser(ModelMap model) {
         model.put("dto", new UserDTO());
         return "user/register.html";
     }
 
     @PostMapping(REGISTER)
     @PreAuthorize("permitAll()")
-    public String cargarUsuario(ModelMap model, @ModelAttribute UserDTO dto, @RequestParam String passwordConfirm) {
+    public String registerUserPost(ModelMap model, @ModelAttribute UserDTO dto, @RequestParam String passwordConfirm) {
         try {
             userService.register(dto, passwordConfirm);
             model.put("msg", "Se ha registrado correctamente!");
-            model.put("dto", new UserDTO());
-            return "user/register.html";
+            return "/index.html";
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             //ex.printStackTrace();
@@ -64,12 +64,10 @@ public class MainController {
             return "user/register.html";
         }
     }
-    
+
     @GetMapping(LOGIN)
     @PreAuthorize("permitAll()")
-    public String registroUsuario(ModelMap model, @RequestParam(required = false) String email, @RequestParam(required = false) String password, @PathVariable(required = false) String msg) {
-        model.addAttribute("email", email);
-        model.addAttribute("password", password);
+    public String userLogin(ModelMap model, @PathVariable(required = false) String msg) {
         model.addAttribute("msg", msg);
         return "user/login.html";
     }

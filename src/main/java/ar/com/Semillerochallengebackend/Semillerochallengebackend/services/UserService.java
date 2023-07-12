@@ -88,9 +88,17 @@ public class UserService implements UserServiceInterface, UserDetailsService {
         User user = userConverter.dtoToEntity(getOne(id));
         user.setActive(false);
         userRepository.save(user);
-        return userConverter.entityToDto(userConverter.dtoToEntity(getOne(id)));
+        return getOne(id);
     }
 
+    @Override
+    public UserDTO activate(String id) throws ServiceRuntimeException {
+        User user = userConverter.dtoToEntity(getOne(id));
+        user.setActive(true);
+        userRepository.save(user);
+        return getOne(id);
+    }
+    
     @Override
     public List<UserDTO> getStudentsByCourse(String courseId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

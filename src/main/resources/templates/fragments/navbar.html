@@ -11,7 +11,7 @@
             rel="stylesheet"
             integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
             crossorigin="anonymous"
-        />
+            />
     </head>
 
     <body>
@@ -20,48 +20,41 @@
             <div class="container">
                 <header
                     class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom"
-                >
+                    >
                     <a
                         href="/"
                         class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none"
-                    >
+                        >
                         <span class="fs-4">Prueba técnica semillero/ quinto impacto</span>
                     </a>
                     <ul class="nav nav-pills">
                         <li
                             sec:authorize="hasAnyRole('ADMIN')"
                             class="nav-item dropdown"
-                        >
+                            >
                             <a
                                 class="nav-link dropdown-toggle"
                                 href="#"
                                 id="dropdown03"
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
-                                >Admin</a
+                                >Usuarios</a
                             >
                             <ul
                                 class="dropdown-menu"
                                 aria-labelledby="dropdown03"
-                            >
-<!--                                <li>
-                                    <a
-                                        class="dropdown-item"
-                                        th:href="@{/admin/usuarios}"
-                                        >Ver todos los usuarios</a
-                                    >
-                                </li>-->
+                                >
                                 <li>
                                     <a
                                         class="dropdown-item"
-                                        th:href="@{/admin/usuarios}"
+                                        th:href="@{/user/list}"
                                         >Ver lista de usuarios</a
                                     >
                                 </li>
                                 <li>
                                     <a
                                         class="dropdown-item"
-                                        th:href="@{/admin/usuarios}"
+                                        th:href="@{/user/search}"
                                         >Buscar usuario</a
                                     >
                                 </li>
@@ -71,7 +64,7 @@
                         <li
                             sec:authorize="hasAnyRole('ADMIN','TEACHER','STUDENT')"
                             class="nav-item dropdown"
-                        >
+                            >
                             <a
                                 class="nav-link dropdown-toggle"
                                 href="#"
@@ -83,18 +76,18 @@
                             <ul
                                 class="dropdown-menu"
                                 aria-labelledby="dropdown03"
-                            >
+                                >
                                 <li>
                                     <a
                                         class="dropdown-item"
-                                        th:href="@{/trabajo/lista/{tipoUsuario}(tipoUsuario = 'cliente')}"
-                                        >Ver lista de cursos</a
+                                        th:href="@{/course/list/}"
+                                        >Ver todos los cursos</a
                                     >
                                 </li>
                                 <li>
                                     <a
                                         class="dropdown-item"
-                                        th:href="@{/post/buscador}"
+                                        th:href="@{/course/search}"
                                         >Buscar cursos</a
                                     >
                                 </li>
@@ -125,7 +118,7 @@
                             <li
                                 sec:authorize="hasAnyRole('ADMIN','TEACHER','STUDENT')"
                                 class="nav-item dropdown"
-                            >
+                                >
                                 <a
                                     class="btn btn-primary me-2 dropdown-toggle"
                                     href="#"
@@ -137,7 +130,7 @@
                                 <ul
                                     class="dropdown-menu"
                                     aria-labelledby="dropdown03"
-                                >
+                                    >
                                     <li>
                                         <a
                                             class="dropdown-item"

@@ -52,6 +52,11 @@ public class CourseService implements CourseServiceInterface {
     }
 
     @Override
+    public CourseDTO activate(String id) throws ServiceRuntimeException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
     public List<CourseDTO> findByTitle(String email) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

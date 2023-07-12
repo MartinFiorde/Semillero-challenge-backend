@@ -21,4 +21,8 @@ public interface CRUDServiceInterface<D> {
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
     public D deactivate(String id) throws ServiceRuntimeException;
+    
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
+    public D activate(String id) throws ServiceRuntimeException;
+    
 }
