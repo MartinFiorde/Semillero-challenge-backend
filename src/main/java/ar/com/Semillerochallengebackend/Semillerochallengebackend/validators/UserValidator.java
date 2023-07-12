@@ -6,6 +6,7 @@ import ar.com.Semillerochallengebackend.Semillerochallengebackend.errors.Service
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.repositories.UserRepository;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.StringUtils;
 import java.time.LocalDateTime;
+import javax.mail.internet.InternetAddress;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,8 +20,8 @@ public class UserValidator {
         this.userRepository = userRepository;
     }
 
-    public UserDTO validateRegister(UserDTO dto, String pass2) {
-        validatePasswords(dto.getPassword(), pass2);
+    public UserDTO validateRegister(UserDTO dto, String passwordConfirm) {
+        validatePasswords(dto.getPassword(), passwordConfirm);
         validateEmail(dto.getEmail());
         validateRole(dto.getRole());
         validateGenericString(dto.getFirstName());
@@ -41,8 +42,8 @@ public class UserValidator {
     }
 
     public String validatePasswords(String password, String passwordConfirm) throws ServiceRuntimeException {
-        if (StringUtils.nullOrEmpty(password) || password.trim().length() < 4) {
-            throw new ServiceRuntimeException("La clave debe tener 4 o más carácteres.");
+        if (StringUtils.nullOrEmpty(password) || password.trim().length() < 8) {
+            throw new ServiceRuntimeException("La clave debe tener más de 8 carácteres.");
         }
         if (!password.equals(passwordConfirm)) {
             throw new ServiceRuntimeException("Las claves no coinciden.");
@@ -52,42 +53,22 @@ public class UserValidator {
 
     public String validateGenericString(String string) throws ServiceRuntimeException {
         if (StringUtils.nullOrEmpty(string)) {
-            throw new ServiceRuntimeException("No puede haber campos vacios");
+            throw new ServiceRuntimeException("No puede haber campos vacios.");
         }
         return string;
     }
 
     public String validateEmail(String email) throws ServiceRuntimeException {
         if (StringUtils.nullOrEmpty(email)) {
-            throw new ServiceRuntimeException("Debe ingresar un email");
+            throw new ServiceRuntimeException("Debe ingresar un email.");
         }
 
-        int dotCount = 0;
-        int atSymbolCount = 0;
-        for (int i = 0; i < email.length(); i++) {
-            if (atSymbolCount > 1) {
-                throw new ServiceRuntimeException("Debe ingresar un mail válido.");
-            }
-            if (email.substring(i, i + 1).equals("@")) {
-                atSymbolCount++;
-                for (int j = i; j < email.length(); j++) {
-                    if (email.substring(j, j + 1).equals(".")) {
-                        dotCount++;
-                    }
-                }
-            }
-        }
-        if (atSymbolCount == 0 || dotCount == 0) {
-            throw new ServiceRuntimeException("Debe ingresar un mail válido..");
-        }
-
-        for (int i = 0; i < email.length(); i++) {
-            if (email.substring(i).equals("@")) {
-                dotCount++;
-            }
-        }
-        if (atSymbolCount > 1) {
-            throw new ServiceRuntimeException("Debe ingresar un mail válido...");
+        try {
+            InternetAddress emailAddr = new InternetAddress(email);
+            emailAddr.validate();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            throw new ServiceRuntimeException("Debe ingresar un mail válido.");
         }
 
         if (userRepository.findByEmail(email).size() >= 1) {
