@@ -66,7 +66,7 @@ public class UserService implements UserServiceInterface, UserDetailsService {
     public void editPassword(String password, String passwordNew, String passwordConfirm) throws ServiceRuntimeException {
         validPasswordSession(password);
         userValidation.validatePasswords(passwordNew, passwordConfirm);
-        User userInDB = userConverter.dtoToEntity(getOne(sessionId()));
+        User userInDB = userRepository.findById(sessionId()).orElse(null);
         userInDB.setPassword(new BCryptPasswordEncoder().encode(passwordNew));
         userRepository.save(userInDB);
     }
@@ -85,7 +85,7 @@ public class UserService implements UserServiceInterface, UserDetailsService {
 
     @Override
     public UserDTO deactivate(String id) {
-        User user = userConverter.dtoToEntity(getOne(id));
+        User user = userRepository.findById(id).orElse(null);
         user.setActive(false);
         userRepository.save(user);
         return getOne(id);
@@ -93,7 +93,7 @@ public class UserService implements UserServiceInterface, UserDetailsService {
 
     @Override
     public UserDTO activate(String id) throws ServiceRuntimeException {
-        User user = userConverter.dtoToEntity(getOne(id));
+        User user = userRepository.findById(id).orElse(null);
         user.setActive(true);
         userRepository.save(user);
         return getOne(id);
