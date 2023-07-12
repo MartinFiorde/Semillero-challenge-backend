@@ -1,8 +1,8 @@
 package ar.com.Semillerochallengebackend.Semillerochallengebackend.converters;
 
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.entities.User;
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.entities.converters.UserConverter;
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.entities.dto.UserDTO;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.User;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.converters.UserConverter;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.UserDTO;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.UserRole;
 import java.time.LocalDateTime;
 import java.util.ArrayList;

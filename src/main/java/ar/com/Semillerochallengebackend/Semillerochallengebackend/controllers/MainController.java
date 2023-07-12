@@ -1,11 +1,11 @@
 package ar.com.Semillerochallengebackend.Semillerochallengebackend.controllers;
 
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.entities.dto.UserDTO;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utilities.Constants.REGISTER;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.UserDTO;
+import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.REGISTER;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.errors.ServiceRuntimeException;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.services.UserService;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utilities.Constants.INDEX;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utilities.Constants.LOGIN;
+import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.INDEX;
+import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.LOGIN;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -57,8 +57,8 @@ public class MainController {
             model.put("dto", new UserDTO());
             return "user/register.html";
         } catch (Exception ex) {
-            System.out.println(ex);
-            ex.printStackTrace();
+            System.out.println(ex.getMessage());
+            //ex.printStackTrace();
             model.put("msg", ex.getMessage());
             model.put("dto", dto);
             return "user/register.html";

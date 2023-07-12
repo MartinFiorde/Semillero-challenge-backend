@@ -1,9 +1,9 @@
-package ar.com.Semillerochallengebackend.Semillerochallengebackend.entities.converters;
+package ar.com.Semillerochallengebackend.Semillerochallengebackend.models.converters;
 
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.entities.User;
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.entities.dto.UserDTO;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.User;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.UserDTO;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.UserRole;
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.utilities.StringUtility;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ParseException;
@@ -32,7 +32,7 @@ public class UserConverter extends Converter<User, UserDTO> {
         User entity = modelMapper.map(dto, User.class);
         if (dto.getPassword() != null) dto.setPassword(new BCryptPasswordEncoder().encode(dto.getPassword()));
         entity = modelMapper.map(dto, User.class);
-        if (StringUtility.nullOrEmpty(dto.getRole())) entity.setRole(UserRole.valueOf(dto.getRole()));
+        if (StringUtils.nullOrEmpty(dto.getRole())) entity.setRole(UserRole.valueOf(dto.getRole()));
         return entity;
     }
 }

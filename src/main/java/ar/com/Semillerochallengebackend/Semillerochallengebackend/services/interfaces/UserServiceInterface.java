@@ -1,6 +1,6 @@
 package ar.com.Semillerochallengebackend.Semillerochallengebackend.services.interfaces;
 
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.entities.dto.UserDTO;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.UserDTO;
 import java.util.List;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;

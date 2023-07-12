@@ -1,21 +1,21 @@
-package ar.com.Semillerochallengebackend.Semillerochallengebackend.validations;
+package ar.com.Semillerochallengebackend.Semillerochallengebackend.validators;
 
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.entities.dto.UserDTO;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.UserDTO;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.UserRole;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.errors.ServiceRuntimeException;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.repositories.UserRepository;
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.utilities.StringUtility;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.StringUtils;
 import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserValidation {
+public class UserValidator {
 
     private UserRepository userRepository;
 
     @Autowired
-    public UserValidation(UserRepository userRepository) {
+    public UserValidator(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -31,9 +31,9 @@ public class UserValidation {
 
     public String validateRole(String role) {
         validateGenericString(role);
-        UserRole roles[] = UserRole.values();
-        for (UserRole aux : roles) {
-            if (aux.toString().equals(role)) {
+        UserRole[] userRoles = UserRole.values();
+        for (UserRole userRole : userRoles) {
+            if (userRole.toString().equals(role)) {
                 return role;
             }
         }
@@ -41,7 +41,7 @@ public class UserValidation {
     }
 
     public String validatePasswords(String pass, String pass2) throws ServiceRuntimeException {
-        if (StringUtility.nullOrEmpty(pass) || pass.trim().length() < 4) {
+        if (StringUtils.nullOrEmpty(pass) || pass.trim().length() < 4) {
             throw new ServiceRuntimeException("La clave debe tener 4 o más carácteres.");
         }
         if (!pass.equals(pass2)) {
@@ -51,14 +51,14 @@ public class UserValidation {
     }
 
     public String validateGenericString(String string) throws ServiceRuntimeException {
-        if (StringUtility.nullOrEmpty(string)) {
+        if (StringUtils.nullOrEmpty(string)) {
             throw new ServiceRuntimeException("No puede haber campos vacios");
         }
         return string;
     }
 
     public String validateEmail(String email) throws ServiceRuntimeException {
-        if (StringUtility.nullOrEmpty(email)) {
+        if (StringUtils.nullOrEmpty(email)) {
             throw new ServiceRuntimeException("Debe ingresar un email");
         }
 

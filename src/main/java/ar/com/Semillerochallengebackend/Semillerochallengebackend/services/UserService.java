@@ -1,15 +1,15 @@
 package ar.com.Semillerochallengebackend.Semillerochallengebackend.services;
 
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.entities.User;
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.entities.converters.UserConverter;
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.entities.dto.UserDTO;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.User;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.converters.UserConverter;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.UserDTO;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.UserRole;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.errors.ServiceRuntimeException;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.repositories.UserRepository;
 import java.util.List;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.services.interfaces.UserServiceInterface;
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.utilities.StringUtility;
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.validations.UserValidation;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.StringUtils;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.validators.UserValidator;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
@@ -30,10 +30,10 @@ public class UserService implements UserServiceInterface, UserDetailsService {
     // INSTANCES AND CONSTRUCTOR
     private UserRepository userRepository;
     private UserConverter userConverter;
-    private UserValidation userValidation;
+    private UserValidator userValidation;
 
     @Autowired
-    public UserService(UserRepository userRepository, UserConverter userConverter, UserValidation userValidation) {
+    public UserService(UserRepository userRepository, UserConverter userConverter, UserValidator userValidation) {
         this.userRepository = userRepository;
         this.userConverter = userConverter;
         this.userValidation = userValidation;
@@ -44,8 +44,6 @@ public class UserService implements UserServiceInterface, UserDetailsService {
     public UserDTO register(UserDTO dto, String pass2) throws ServiceRuntimeException {
         User user = userConverter.dtoToEntity(userValidation.validateRegister(dto, pass2));
         userRepository.save(user);
-        System.out.println(user.getId());
-        System.out.println(user.getPassword());
         return userConverter.entityToDto(user);
     }
 
@@ -95,7 +93,7 @@ public class UserService implements UserServiceInterface, UserDetailsService {
         try {
             if (user == null) throw new ServiceRuntimeException("Usuario no encontrado");
         } catch (Exception ex) {
-            System.out.println(ex);
+            System.out.println(ex.getMessage());
             throw new UsernameNotFoundException("Usuario no encontrado");
         }
         List<GrantedAuthority> permissions = new ArrayList();

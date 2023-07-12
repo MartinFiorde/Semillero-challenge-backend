@@ -1,8 +1,8 @@
 package ar.com.Semillerochallengebackend.Semillerochallengebackend.converters;
 
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.entities.Course;
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.entities.converters.CourseConverter;
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.entities.dto.CourseDTO;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.Course;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.converters.CourseConverter;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.CourseDTO;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.CourseStatus;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.CourseTurn;
 import java.time.LocalDate;

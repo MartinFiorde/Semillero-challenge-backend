@@ -9,6 +9,6 @@ package ar.com.Semillerochallengebackend.Semillerochallengebackend.controllers;
  *
  * @author Martin F - PC Desk
  */
-public class StudentController {
+public class UserController {
     
 }
