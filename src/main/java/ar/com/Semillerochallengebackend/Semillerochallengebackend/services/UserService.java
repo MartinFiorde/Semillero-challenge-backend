@@ -10,12 +10,12 @@ import java.util.List;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.services.interfaces.UserServiceInterface;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.StringUtils;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.validators.UserValidator;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -41,35 +41,54 @@ public class UserService implements UserServiceInterface, UserDetailsService {
 
     // METHODS
     @Override
-    public UserDTO register(UserDTO dto, String passwordConfirm) throws ServiceRuntimeException {
-        User user = userConverter.dtoToEntity(userValidation.validateRegister(dto, passwordConfirm));
+    public UserDTO register(UserDTO d, String passwordConfirm) throws ServiceRuntimeException {
+        userValidation.validateRegister(d, passwordConfirm);
+        return save(d);
+    }
+
+    @Override
+    public UserDTO save(UserDTO d) throws ServiceRuntimeException {
+        User user = userConverter.dtoToEntity(d);
         userRepository.save(user);
         return userConverter.entityToDto(user);
     }
 
     @Override
-    public UserDTO save(UserDTO d) throws ServiceRuntimeException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public UserDTO edit(UserDTO d) throws ServiceRuntimeException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        User userInDB = userConverter.dtoToEntity(getOne(d.getId()));
+        User userModified = userConverter.dtoToEntity(d);
+        userModified.setPassword(userInDB.getPassword());
+        System.out.println("regDate inDB: "+userInDB.getRegistrationDate());
+        System.out.println("regDate modif: "+userModified.getRegistrationDate());
+        return userConverter.entityToDto(userRepository.save(userModified));
     }
 
+    public void editPassword(String password, String passwordNew, String passwordConfirm) throws ServiceRuntimeException {
+        validPasswordSession(password);
+        userValidation.validatePasswords(passwordNew, passwordConfirm);
+        User userInDB = userConverter.dtoToEntity(getOne(sessionId()));
+        userInDB.setPassword(new BCryptPasswordEncoder().encode(passwordNew));
+        userRepository.save(userInDB);
+    }
+    
     @Override
-    public UserDTO getOne(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public UserDTO getOne(String id) throws ServiceRuntimeException {
+        UserDTO d = userConverter.entityToDto(userRepository.findById(id).orElse(null));
+        if (d==null) throw new ServiceRuntimeException("User not found");
+        return userConverter.entityToDto(userRepository.findById(id).orElse(null));
     }
 
     @Override
     public List<UserDTO> getAllActives() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return userConverter.entitiesToDto(userRepository.getAllActive());
     }
 
     @Override
     public UserDTO deactivate(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        User user = userConverter.dtoToEntity(getOne(id));
+        user.setActive(false);
+        userRepository.save(user);
+        return userConverter.entityToDto(userConverter.dtoToEntity(getOne(id)));
     }
 
     @Override
@@ -78,7 +97,7 @@ public class UserService implements UserServiceInterface, UserDetailsService {
     }
 
     @Override
-    public List<UserDTO> findLikeName(String search) {
+    public List<UserDTO> findLikeName(String firstName, String lastName) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -100,11 +119,30 @@ public class UserService implements UserServiceInterface, UserDetailsService {
         GrantedAuthority rolePermissions = new SimpleGrantedAuthority("ROLE_" + user.getRole().toString());
         permissions.add(rolePermissions);
 
-        // guardado del objeto usuario en la sesion
+        // Save the user object in the session attributes
         ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpSession session = attr.getRequest().getSession(true);
         session.setAttribute("usersesion", user);
 
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), permissions);
+    }
+    
+    public String sessionId() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String pathmail = "";
+        if (principal instanceof UserDetails) {
+            pathmail = ((UserDetails) principal).getUsername();
+        } else {
+            pathmail = principal.toString();
+        }
+        String idsesion = userRepository.findByEmail(pathmail).get(0).getId();
+        return idsesion;
+    }
+    
+    public boolean validPasswordSession(String password) throws ServiceRuntimeException {
+        if (!new BCryptPasswordEncoder().matches(password, userRepository.findById(sessionId()).get().getPassword())) {
+            throw new ServiceRuntimeException("La clave anterior no es correcta");
+        }
+        return true;
     }
 }

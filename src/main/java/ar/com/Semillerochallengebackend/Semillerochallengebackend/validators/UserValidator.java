@@ -6,7 +6,7 @@ import ar.com.Semillerochallengebackend.Semillerochallengebackend.errors.Service
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.repositories.UserRepository;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.StringUtils;
 import java.time.LocalDateTime;
-import javax.mail.internet.InternetAddress;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -42,8 +42,8 @@ public class UserValidator {
     }
 
     public String validatePasswords(String password, String passwordConfirm) throws ServiceRuntimeException {
-        if (StringUtils.nullOrEmpty(password) || password.trim().length() < 8) {
-            throw new ServiceRuntimeException("La clave debe tener más de 8 carácteres.");
+        if (StringUtils.nullOrEmpty(password) || password.trim().length() < 4) {
+            throw new ServiceRuntimeException("La clave debe tener más de 4 carácteres.");
         }
         if (!password.equals(passwordConfirm)) {
             throw new ServiceRuntimeException("Las claves no coinciden.");
@@ -63,11 +63,7 @@ public class UserValidator {
             throw new ServiceRuntimeException("Debe ingresar un email.");
         }
 
-        try {
-            InternetAddress emailAddr = new InternetAddress(email);
-            emailAddr.validate();
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+        if (!EmailValidator.getInstance().isValid(email)) {
             throw new ServiceRuntimeException("Debe ingresar un mail válido.");
         }
 
