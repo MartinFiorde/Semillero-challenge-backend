@@ -5,6 +5,7 @@ import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.convert
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.errors.ServiceRuntimeException;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.Course;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.User;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.converters.UserConverter;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.CourseDTO;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.UserDTO;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.repositories.CourseRepository;
@@ -25,14 +26,16 @@ public class CourseService implements CourseServiceInterface {
     private CourseValidator courseValidation;
     private UserService userService;
     private UserRepository userRepository;
+    private UserConverter userConverter;
 
     @Autowired
-    public CourseService(CourseRepository courseRepository, CourseConverter courseConverter, CourseValidator courseValidation, UserService userService, UserRepository userRepository) {
+    public CourseService(CourseRepository courseRepository, CourseConverter courseConverter, CourseValidator courseValidation, UserService userService, UserRepository userRepository, UserConverter userConverter) {
         this.courseRepository = courseRepository;
         this.courseConverter = courseConverter;
         this.courseValidation = courseValidation;
         this.userService = userService;
         this.userRepository = userRepository;
+        this.userConverter = userConverter;
     }
 
     // METHODS
@@ -106,7 +109,6 @@ public class CourseService implements CourseServiceInterface {
 
         course.setTeacherId(teacher.getId());
         course.setTeacherFullName(teacher.getLastName() + " " + teacher.getFirstName());
-        System.out.println("anda antes de guardar el curso");
         courseRepository.save(course);
 
         List<Course> teacherCourses = teacher.getCourses();
@@ -115,10 +117,7 @@ public class CourseService implements CourseServiceInterface {
         }
         teacherCourses.add(course);
         teacher.setCourses(teacherCourses);
-        System.out.println("anda antes de guardar el curso dentro del user");
-        System.out.println("teacherId: "+teacher.getId());
         // userRepository.save(teacher);
-        System.out.println("---------------------------------- murio?");
         return courseConverter.entityToDto(course);
     }
 
@@ -181,6 +180,6 @@ public class CourseService implements CourseServiceInterface {
 
     @Override
     public List<UserDTO> getStudentsByCourse(String courseId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return userConverter.entitiesToDto(userRepository.findUsersByCourseId(courseId));
     }
 }

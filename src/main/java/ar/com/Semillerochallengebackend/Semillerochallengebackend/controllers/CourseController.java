@@ -67,6 +67,7 @@ public class CourseController {
     @PreAuthorize("isAuthenticated()")
     public String detailOtherCourseData(ModelMap model, @PathVariable String id) throws ServiceRuntimeException {
         model.put("dto", courseService.getOne(id));
+        model.put("students", courseService.getStudentsByCourse(id));
         return "course/detail.html";
     }
 
@@ -75,6 +76,7 @@ public class CourseController {
     public String deactivateCourse(ModelMap model, @PathVariable String id) throws ServiceRuntimeException {
         model.put("msg", "Usuario desactivado");
         model.put("dto", courseService.deactivate(id));
+        model.put("students", courseService.getStudentsByCourse(id));
         return "course/detail.html";
     }
 
@@ -83,6 +85,7 @@ public class CourseController {
     public String activateCourse(ModelMap model, @PathVariable String id) throws ServiceRuntimeException {
         model.put("msg", "Usuario reactivado!");
         model.put("dto", courseService.activate(id));
+        model.put("students", courseService.getStudentsByCourse(id));
         return "course/detail.html";
     }
 
@@ -100,6 +103,7 @@ public class CourseController {
             courseService.edit(dto);
             model.put("msg", "Los datos se han editado correctamente!");
             model.put("dto", courseService.getOne(dto.getId()));
+            model.put("students", courseService.getStudentsByCourse(dto.getId()));
             return "course/detail.html";
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -115,13 +119,13 @@ public class CourseController {
         try {
             model.put("msg", "Te has asignado como profesor del curso.");
             model.put("dto", courseService.addTeacher(id));
-            System.out.println("antes de return try-------------------------------");
+            model.put("students", courseService.getStudentsByCourse(id));
             return "course/detail.html";
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
-            System.out.println("--------------catch controller");
             model.put("msg", ex.getMessage());
             model.put("dto", courseService.getOne(id));
+            model.put("students", courseService.getStudentsByCourse(id));
             return "course/detail.html";
         }
 
