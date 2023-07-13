@@ -13,13 +13,13 @@ public interface CourseServiceInterface extends CRUDServiceInterface<CourseDTO> 
     public CourseDTO create(CourseDTO d) throws ServiceRuntimeException;
     
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
-    public CourseDTO addTeacher(String id) throws ServiceRuntimeException;
+    public CourseDTO addTeacher(String courseId) throws ServiceRuntimeException;
     
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
-    public CourseDTO deleteTeacher(String id) throws ServiceRuntimeException;
+    public CourseDTO deleteTeacher(String courseId) throws ServiceRuntimeException;
     
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
-    public UserDTO addCourseToUser(String courseId) throws ServiceRuntimeException;
+    public CourseDTO addToStudent(String courseId) throws ServiceRuntimeException;
     
     @Transactional(readOnly = true)
     public List<UserDTO> getStudentsByCourse(String courseId);
