@@ -1,8 +1,9 @@
 package ar.com.Semillerochallengebackend.Semillerochallengebackend.services;
 
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.converters.CourseConverter;
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.CourseDTO;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.errors.ServiceRuntimeException;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.Course;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.CourseDTO;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.repositories.CourseRepository;
 import java.util.List;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.services.interfaces.CourseServiceInterface;
@@ -27,35 +28,71 @@ public class CourseService implements CourseServiceInterface {
 
     // METHODS
     @Override
+    public CourseDTO create(CourseDTO d, String passwordConfirm) throws ServiceRuntimeException {
+        courseValidation.validateRegister(d, passwordConfirm);
+        return save(d);
+    }
+
+    @Override
     public CourseDTO save(CourseDTO d) throws ServiceRuntimeException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Course course = courseConverter.dtoToEntity(d);
+        courseRepository.save(course);
+        return courseConverter.entityToDto(course);
     }
 
     @Override
     public CourseDTO edit(CourseDTO d) throws ServiceRuntimeException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Course courseInDB = courseRepository.findById(d.getId()).get();
+        Course courseModified = courseConverter.dtoToEntity(d);
+//        courseModified.setPassword(courseInDB.getPassword());
+//        courseModified.setRegistrationDate(courseInDB.getRegistrationDate());
+//        courseModified.setEmail(courseInDB.getEmail());
+//        if (courseModified.getRole()==null) {
+//            courseModified.setRole(courseInDB.getRole());
+//        }
+        courseValidation.validateUpdate(courseConverter.entityToDto(courseModified));
+        return courseConverter.entityToDto(courseRepository.save(courseModified));
     }
 
     @Override
-    public CourseDTO getOne(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public CourseDTO getOne(String id) throws ServiceRuntimeException {
+        CourseDTO d = courseConverter.entityToDto(courseRepository.findById(id).orElse(null));
+        if (d==null) throw new ServiceRuntimeException("Course not found");
+        return courseConverter.entityToDto(courseRepository.findById(id).orElse(null));
     }
 
     @Override
     public List<CourseDTO> getAllActives() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return courseConverter.entitiesToDto(courseRepository.getAllActive());
     }
 
     @Override
     public CourseDTO deactivate(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Course course = courseRepository.findById(id).orElse(null);
+        course.setActive(false);
+        courseRepository.save(course);
+        return getOne(id);
     }
 
     @Override
     public CourseDTO activate(String id) throws ServiceRuntimeException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Course course = courseRepository.findById(id).orElse(null);
+        course.setActive(true);
+        courseRepository.save(course);
+        return getOne(id);
     }
     
+    public Course findActiveById(String id) throws ServiceRuntimeException {
+        return courseValidation.validateActiveStatus(courseRepository.findById(id).orElse(null));
+    }
+    
+//  HASTA ACA LLEGA LA COPIA DE USER -------------------------------------------
+//    
+//    
+//    
+//    
+//    
+
     @Override
     public List<CourseDTO> findByTitle(String email) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -75,4 +112,5 @@ public class CourseService implements CourseServiceInterface {
     public CourseDTO deleteTeacher(String id) throws ServiceRuntimeException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
 }

@@ -90,7 +90,7 @@ public class UserController {
     @GetMapping(EDIT + GET_ID)
     @PreAuthorize("isAuthenticated()")
     public String changeOtherUserData(ModelMap model, @PathVariable String id) {
-         if (id.equals("session")) {
+        if (id.equals("session")) {
             id = userService.sessionId();
         }
         model.put("dto", userService.getOne(id));
@@ -99,11 +99,11 @@ public class UserController {
 
     @PostMapping(EDIT)
     @PreAuthorize("isAuthenticated()")
-    public String changeOtherUserDataPost(ModelMap model, @ModelAttribute UserDTO dto, @RequestParam String id) {
+    public String changeOtherUserDataPost(ModelMap model, @ModelAttribute UserDTO dto) {
         try {
             userService.edit(dto);
             model.put("msg", "Los datos se han editado correctamente!");
-            model.put("dto", userService.getOne(id));
+            model.put("dto", userService.getOne(dto.getId()));
             return "user/detail.html";
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
