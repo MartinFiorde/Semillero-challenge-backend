@@ -57,7 +57,9 @@ public class CourseService implements CourseServiceInterface {
     @Override
     public CourseDTO getOne(String id) throws ServiceRuntimeException {
         CourseDTO d = courseConverter.entityToDto(courseRepository.findById(id).orElse(null));
-        if (d==null) throw new ServiceRuntimeException("Course not found");
+        if (d == null) {
+            throw new ServiceRuntimeException("Course not found");
+        }
         return courseConverter.entityToDto(courseRepository.findById(id).orElse(null));
     }
 
@@ -81,18 +83,13 @@ public class CourseService implements CourseServiceInterface {
         courseRepository.save(course);
         return getOne(id);
     }
-    
+
     public Course findActiveById(String id) throws ServiceRuntimeException {
         return courseValidation.validateActiveStatus(courseRepository.findById(id).orElse(null));
     }
-    
-//  HASTA ACA LLEGA LA COPIA DE USER -------------------------------------------
-//    
-//    
-//    
-//    
-//    
 
+//
+//
     @Override
     public List<CourseDTO> findByTitle(String email) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -112,5 +109,5 @@ public class CourseService implements CourseServiceInterface {
     public CourseDTO deleteTeacher(String id) throws ServiceRuntimeException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }
