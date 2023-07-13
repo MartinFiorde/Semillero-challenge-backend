@@ -104,7 +104,8 @@ public class UserService implements UserServiceInterface, UserDetailsService {
     
     @Override
     public List<UserDTO> findLikeName(String firstName, String lastName) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return userConverter.entitiesToDto(userRepository.findLikeName(firstName, lastName));
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
