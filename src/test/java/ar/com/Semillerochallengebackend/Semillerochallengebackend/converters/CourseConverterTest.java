@@ -3,8 +3,8 @@ package ar.com.Semillerochallengebackend.Semillerochallengebackend.converters;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.Course;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.converters.CourseConverter;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.CourseDTO;
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.CourseStatus;
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.CourseTurn;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.CourseStatusEnum;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.CourseTurnEnum;
 import java.time.LocalDate;
 import static org.junit.Assert.*;
 import org.junit.jupiter.api.DisplayName;
@@ -26,7 +26,7 @@ public class CourseConverterTest {
     @DisplayName("It should turn CourseDTO into a valid Course Entity")
     public void testDtoToEntity() {
         // ARRANGE - Setting up the data that required for the test case
-        Course expectedResult = new Course(null, true, "Java Inicial", 1, LocalDate.parse("2023-07-30"), CourseStatus.PROGRAMED, CourseTurn.MORNING, "curso inicial de java", null, null);
+        Course expectedResult = new Course(null, true, "Java Inicial", 1, LocalDate.parse("2023-07-30"), CourseStatusEnum.PROGRAMED, CourseTurnEnum.MORNING, "curso inicial de java", null, null);
         CourseDTO dto = new CourseDTO(null, true, "Java Inicial", 1, LocalDate.parse("2023-07-30"), "PROGRAMED", "MORNING", "curso inicial de java", null, null);
 
         // ACT - Calling a Method/Unit that is being tested

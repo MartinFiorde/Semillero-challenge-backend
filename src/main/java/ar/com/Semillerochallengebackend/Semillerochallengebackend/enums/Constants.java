@@ -1,4 +1,4 @@
-package ar.com.Semillerochallengebackend.Semillerochallengebackend.utils;
+package ar.com.Semillerochallengebackend.Semillerochallengebackend.enums;
 
 public final class Constants {
 

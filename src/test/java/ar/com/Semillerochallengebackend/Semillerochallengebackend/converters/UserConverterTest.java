@@ -3,7 +3,7 @@ package ar.com.Semillerochallengebackend.Semillerochallengebackend.converters;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.User;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.converters.UserConverter;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.UserDTO;
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.UserRole;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.UserRoleEnum;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import static org.junit.Assert.*;
@@ -26,7 +26,7 @@ public class UserConverterTest {
     public void testDtoToEntity() {
         System.out.println("dtoToEntity");
 
-        User expectedResult = new User(null, true, LocalDateTime.parse("2023-07-30T00:00:00"), "martinlirio@gmail.com", null, UserRole.ADMIN, "Martín", "Fiordelisi", "35511912", "martin.lirio@gmail.com", "Soul6515", new ArrayList<>());
+        User expectedResult = new User(null, true, LocalDateTime.parse("2023-07-30T00:00:00"), "martinlirio@gmail.com", null, UserRoleEnum.ADMIN, "Martín", "Fiordelisi", "35511912", "martin.lirio@gmail.com", "Soul6515", new ArrayList<>());
         UserDTO dto = new UserDTO(null, true, LocalDateTime.parse("2023-07-30T00:00:00"), "martinlirio@gmail.com", "12345678", "ADMIN", "Martín", "Fiordelisi", "35511912", "martin.lirio@gmail.com", "Soul6515", new ArrayList<>());
 
         User result = adminConverter.dtoToEntity(dto);

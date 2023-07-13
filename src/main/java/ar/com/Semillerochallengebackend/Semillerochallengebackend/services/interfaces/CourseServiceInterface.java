@@ -9,6 +9,9 @@ import ar.com.Semillerochallengebackend.Semillerochallengebackend.services.inter
 
 public interface CourseServiceInterface extends CRUDServiceInterface<CourseDTO> {
 
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
+    public CourseDTO create(CourseDTO d) throws ServiceRuntimeException;
+    
     @Transactional(readOnly = true)
     public List<CourseDTO> findByTitle(String email);
     

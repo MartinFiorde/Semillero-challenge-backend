@@ -22,30 +22,32 @@
         <!-- end navbar -->
         <div class="container justify-content-center">
 
-            <h1>Registro de usuario</h1>
+            <h1>Editar datos de usuario</h1>
             <form
-                th:action="@{/register}"
+                th:action="@{/user/edit}"
                 th:object="${dto}"
                 enctype="multipart/form-data"
                 method="POST"
                 >
+                <input th:if="*{id != null}" name="id" th:field="*{id}"/>
+                <br th:if="*{id != null}" >
                 <input type="text" name="firstName" placeholder="Nombre" th:field="*{firstName}" required/>
                 <br>
-                <input type="text" name="lastName" placeholder="Apellido" th:value="*{lastName}" required/>
+                <input type="text" name="lastName" placeholder="Apellido" th:field="*{lastName}" required/>
                 <br>
-                <input type="email" name="email" placeholder="Email" th:value="*{email}" required/>
+                <input type="text" name="dni" placeholder="DNI" th:field="*{dni}" required/>
                 <br>
-                <select name="role" id="role" th:field="*{role}" required>
+                <input type="email" name="gmailUser" placeholder="Usuario de gmail" th:field="*{gmailUser}" required/>
+                <br>
+                <input type="text" name="discordUser" placeholder="Usuario de discord" th:field="*{discordUser}" required/>
+                <br sec:authorize="hasAnyRole('ADMIN')">
+                <select sec:authorize="hasAnyRole('ADMIN')" name="tipo" id="tipo" th:field="*{role}" required>
                     <option value="ADMIN">Admin</option>
                     <option value="TEACHER">Profesor</option>
                     <option value="STUDENT">Estudiante</option>
                 </select>
                 <br>
-                <input type="password" name="password" placeholder="Contraseña" required/>
                 <br>
-                <input type="password" name="passwordConfirm" placeholder="Repita la contraseña" required/>
-                <br>
-                <br />
                 <input type="submit" value="Aceptar" />
             </form>
             <p

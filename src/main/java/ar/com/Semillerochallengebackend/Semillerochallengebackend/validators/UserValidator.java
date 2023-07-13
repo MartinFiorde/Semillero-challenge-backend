@@ -1,7 +1,7 @@
 package ar.com.Semillerochallengebackend.Semillerochallengebackend.validators;
 
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.UserDTO;
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.UserRole;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.UserRoleEnum;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.errors.ServiceRuntimeException;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.User;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.repositories.UserRepository;
@@ -45,8 +45,8 @@ public class UserValidator {
 
     public String validateRole(String role) throws ServiceRuntimeException {
         validateGenericString(role);
-        UserRole[] userRoles = UserRole.values();
-        for (UserRole userRole : userRoles) {
+        UserRoleEnum[] userRoles = UserRoleEnum.values();
+        for (UserRoleEnum userRole : userRoles) {
             if (userRole.toString().equals(role)) {
                 return role;
             }

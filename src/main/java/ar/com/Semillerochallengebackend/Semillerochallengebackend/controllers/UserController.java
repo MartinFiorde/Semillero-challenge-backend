@@ -3,14 +3,14 @@ package ar.com.Semillerochallengebackend.Semillerochallengebackend.controllers;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.errors.ServiceRuntimeException;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.UserDTO;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.services.UserService;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.LIST;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.DETAIL;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.GET_ID;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.DEACTIVATE;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.ACTIVATE;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.EDIT_PASS;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.EDIT;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.USER;
+import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.LIST;
+import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.DETAIL;
+import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.GET_ID;
+import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.DEACTIVATE;
+import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.ACTIVATE;
+import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.EDIT_PASS;
+import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.EDIT;
+import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.USER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -90,7 +90,7 @@ public class UserController {
     @GetMapping(EDIT + GET_ID)
     @PreAuthorize("isAuthenticated()")
     public String changeOtherUserData(ModelMap model, @PathVariable String id) {
-         if (id.equals("session")) {
+        if (id.equals("session")) {
             id = userService.sessionId();
         }
         model.put("dto", userService.getOne(id));
@@ -99,11 +99,11 @@ public class UserController {
 
     @PostMapping(EDIT)
     @PreAuthorize("isAuthenticated()")
-    public String changeOtherUserDataPost(ModelMap model, @ModelAttribute UserDTO dto, @RequestParam String id) {
+    public String changeOtherUserDataPost(ModelMap model, @ModelAttribute UserDTO dto) {
         try {
             userService.edit(dto);
             model.put("msg", "Los datos se han editado correctamente!");
-            model.put("dto", userService.getOne(id));
+            model.put("dto", userService.getOne(dto.getId()));
             return "user/detail.html";
         } catch (Exception ex) {
             System.out.println(ex.getMessage());

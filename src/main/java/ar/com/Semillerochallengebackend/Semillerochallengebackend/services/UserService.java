@@ -3,12 +3,10 @@ package ar.com.Semillerochallengebackend.Semillerochallengebackend.services;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.User;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.converters.UserConverter;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.UserDTO;
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.UserRole;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.errors.ServiceRuntimeException;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.repositories.UserRepository;
 import java.util.List;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.services.interfaces.UserServiceInterface;
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.StringUtils;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.validators.UserValidator;
 import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
@@ -122,6 +120,7 @@ public class UserService implements UserServiceInterface, UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email).isEmpty() ? null : userRepository.findByEmail(email).get(0);
         if (user == null) throw new UsernameNotFoundException("User not found");
+        if (!user.isActive()) throw new UsernameNotFoundException("User not active");
         List<GrantedAuthority> permissions = new ArrayList();
         GrantedAuthority rolePermissions = new SimpleGrantedAuthority("ROLE_" + user.getRole().toString());
         permissions.add(rolePermissions);
