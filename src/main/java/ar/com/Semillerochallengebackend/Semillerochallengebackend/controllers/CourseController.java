@@ -108,4 +108,20 @@ public class CourseController {
             return "course/update-data.html";
         }
     }
+    
+    @GetMapping("/addTeacher"+GET_ID)
+    @PreAuthorize("hasAnyRole('ADMIN','TEACHER')")
+    public String addTeacher(ModelMap model, @PathVariable String id) throws ServiceRuntimeException {
+        model.put("msg", "Te has asignado como profesor del curso.");
+        model.put("dto", courseService.addTeacher(id));
+        return "course/detail.html";
+    }
+    
+    @GetMapping("/deleteTeacher"+GET_ID)
+    @PreAuthorize("hasAnyRole('ADMIN','TEACHER')")
+    public String deleteTeacher(ModelMap model, @PathVariable String id) throws ServiceRuntimeException {
+        model.put("msg", "Se ha removido al profesor del curso.");
+        model.put("dto", courseService.deleteTeacher(id));
+        return "course/detail.html";
+    }
 }

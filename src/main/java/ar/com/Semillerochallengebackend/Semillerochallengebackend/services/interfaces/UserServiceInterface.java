@@ -12,11 +12,5 @@ public interface UserServiceInterface extends CRUDServiceInterface<UserDTO>{
     public UserDTO register(UserDTO d, String passwordConfirm) throws ServiceRuntimeException;
     
     @Transactional(readOnly = true)
-    public List<UserDTO> getStudentsByCourse(String courseId);
-    
-    @Transactional(readOnly = true)
     public List<UserDTO> findLikeName(String firstName, String lastName);
-    
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
-    public UserDTO addCourse(String courseId) throws ServiceRuntimeException;
 }
