@@ -27,6 +27,10 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     @Query(value = "SELECT * FROM user "
             + "INNER JOIN user_courses ON user.id = user_courses.user_id "
-            + "WHERE user_courses.courses_id = :courseId", nativeQuery = true)
+            + "WHERE user_courses.courses_id = :courseId "
+            + "AND user.role = 'STUDENT'", nativeQuery = true)
+//    @Query(value = "SELECT * FROM user "
+//            + "INNER JOIN user_courses ON user.id = user_courses.user_id "
+//            + "WHERE user_courses.courses_id = :courseId", nativeQuery = true)
     public List<User> findUsersByCourseId(@Param("courseId") String courseId);
 }
