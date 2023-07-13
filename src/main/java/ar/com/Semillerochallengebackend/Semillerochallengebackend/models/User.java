@@ -1,6 +1,6 @@
 package ar.com.Semillerochallengebackend.Semillerochallengebackend.models;
 
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.UserRole;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.UserRoleEnum;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Column;
@@ -41,7 +41,7 @@ public class User {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private UserRole role;
+    private UserRoleEnum role;
 
     @Column(length = 32)
     private String firstName;

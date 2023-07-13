@@ -1,13 +1,13 @@
 package ar.com.Semillerochallengebackend.Semillerochallengebackend.enums;
 
-public enum CourseTurn {
+public enum CourseTurnEnum {
     MORNING("A la mañana"), 
     AFTERNOON("A la tarde"), 
     NIGHT("A la noche");
 
     private final String displayValue;
     
-    private CourseTurn(String displayValue) {
+    private CourseTurnEnum(String displayValue) {
         this.displayValue = displayValue;
     }
     

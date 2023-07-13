@@ -1,5 +1,5 @@
 package ar.com.Semillerochallengebackend.Semillerochallengebackend.enums;
 
-public enum UserRole {
+public enum UserRoleEnum {
 	ADMIN, TEACHER, STUDENT;
 }

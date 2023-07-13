@@ -1,6 +1,6 @@
 package ar.com.Semillerochallengebackend.Semillerochallengebackend.validators;
 
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.CourseTurn;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.CourseTurnEnum;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.errors.ServiceRuntimeException;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.Course;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.CourseDTO;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CourseValidator {
     
-    public CourseDTO validateRegister(CourseDTO dto, String passwordConfirm) {
+    public CourseDTO createValidator(CourseDTO dto) {
 //        validatePasswords(dto.getPassword(), passwordConfirm);
 //        validateEmail(dto.getEmail());
 //        validateRole(dto.getRole());
@@ -34,8 +34,8 @@ public class CourseValidator {
 
     public String validateRole(String role) throws ServiceRuntimeException {
         validateGenericString(role);
-        CourseTurn[] courseTurns = CourseTurn.values();
-        for (CourseTurn courseTurn : courseTurns) {
+        CourseTurnEnum[] courseTurns = CourseTurnEnum.values();
+        for (CourseTurnEnum courseTurn : courseTurns) {
             if (courseTurn.toString().equals(role)) {
                 return role;
             }

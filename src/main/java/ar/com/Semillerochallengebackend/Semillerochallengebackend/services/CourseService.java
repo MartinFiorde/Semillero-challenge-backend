@@ -28,8 +28,8 @@ public class CourseService implements CourseServiceInterface {
 
     // METHODS
     @Override
-    public CourseDTO create(CourseDTO d, String passwordConfirm) throws ServiceRuntimeException {
-        courseValidation.validateRegister(d, passwordConfirm);
+    public CourseDTO create(CourseDTO d) throws ServiceRuntimeException {
+        courseValidation.createValidator(d);
         return save(d);
     }
 

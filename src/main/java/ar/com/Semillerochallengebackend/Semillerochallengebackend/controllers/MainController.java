@@ -2,9 +2,9 @@ package ar.com.Semillerochallengebackend.Semillerochallengebackend.controllers;
 
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.UserDTO;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.services.UserService;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.REGISTER;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.INDEX;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.LOGIN;
+import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.REGISTER;
+import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.INDEX;
+import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.LOGIN;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;

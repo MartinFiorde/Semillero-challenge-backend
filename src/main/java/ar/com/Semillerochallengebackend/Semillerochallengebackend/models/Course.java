@@ -1,7 +1,7 @@
 package ar.com.Semillerochallengebackend.Semillerochallengebackend.models;
 
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.CourseStatus;
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.CourseTurn;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.CourseStatusEnum;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.CourseTurnEnum;
 import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,10 +39,10 @@ public class Course {
     private LocalDate startDate;
     
     @Enumerated(EnumType.STRING)
-    protected CourseStatus status;
+    protected CourseStatusEnum status;
     
     @Enumerated(EnumType.STRING)
-    private CourseTurn turn;
+    private CourseTurnEnum turn;
     
     private String description;
     

@@ -3,22 +3,27 @@ package ar.com.Semillerochallengebackend.Semillerochallengebackend.controllers;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.errors.ServiceRuntimeException;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.CourseDTO;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.services.CourseService;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.ACTIVATE;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.DEACTIVATE;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.DETAIL;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.EDIT;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.GET_ID;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.LIST;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.REGISTER;
+import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.ACTIVATE;
+import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.DEACTIVATE;
+import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.DETAIL;
+import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.EDIT;
+import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.GET_ID;
+import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.LIST;
+import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.SAVE;
+import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.COURSE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+@Controller
+@RequestMapping(COURSE)
+@PreAuthorize("isAuthenticated()")
 public class CourseController {
 
     private CourseService courseService;
@@ -28,31 +33,31 @@ public class CourseController {
         this.courseService = courseService;
     }
 
-    @GetMapping(REGISTER)
-    @PreAuthorize("permitAll()")
-    public String registerCourse(ModelMap model) {
+    @GetMapping(SAVE)
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public String createCourse(ModelMap model) {
         model.put("dto", new CourseDTO());
-        return "course/register.html";
+        return "/course/create.html";
     }
 
-    @PostMapping(REGISTER)
-    @PreAuthorize("permitAll()")
-    public String registerCoursePost(ModelMap model, @ModelAttribute CourseDTO dto, @RequestParam String passwordConfirm) {
+    @PostMapping(SAVE)
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public String createCoursePost(ModelMap model, @ModelAttribute CourseDTO dto) {
         try {
-            courseService.create(dto, passwordConfirm);
-            model.put("msg", "Se ha registrado correctamente!");
-            return "/index.html";
+            CourseDTO savedDTO = courseService.create(dto);
+            model.put("msg", "El curso se ha creado exitosamente!");
+            model.put("dto",savedDTO);
+            return "course/detail.html";
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
-            //ex.printStackTrace();
             model.put("msg", ex.getMessage());
             model.put("dto", dto);
-            return "course/register.html";
+            return "course/create.html";
         }
     }
 
     @GetMapping(LIST)
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("isAuthenticated()")
     public String detailOtherCourseData(ModelMap model) {
         model.put("dtos", courseService.getAllActives());
         return "course/list.html";
@@ -89,7 +94,7 @@ public class CourseController {
     }
 
     @PostMapping(EDIT)
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public String changeOtherCourseDataPost(ModelMap model, @ModelAttribute CourseDTO dto) {
         try {
             courseService.edit(dto);

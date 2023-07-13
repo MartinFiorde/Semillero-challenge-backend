@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 @NoArgsConstructor
@@ -21,6 +22,7 @@ public final class CourseDTO {
 
     private Integer commission;
     
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate startDate;
     
     protected String status;
