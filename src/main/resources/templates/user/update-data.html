@@ -29,7 +29,7 @@
                 enctype="multipart/form-data"
                 method="POST"
                 >
-                <input th:if="*{id != null}" name="id" th:field="*{id}"/>
+                <input type="hidden" th:if="*{id != null}" name="id" th:field="*{id}"/>
                 <br th:if="*{id != null}" >
                 <input type="text" name="firstName" placeholder="Nombre" th:field="*{firstName}" required/>
                 <br>

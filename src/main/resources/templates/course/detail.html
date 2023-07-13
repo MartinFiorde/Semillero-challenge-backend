@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Detail user</title>
+        <title>Detail course</title>
 
         <!-- Bootstrap core CSS -->
         <link
@@ -21,28 +21,27 @@
         <nav th:replace="fragments/navbar.html :: header"></nav>
         <!-- end navbar -->
         <div th:object="${dto}" class="container justify-content-center">
-            <h1 th:text="'Datos del usuario '+*{firstName}+' '+*{lastName}"></h1>
+            <h1 th:text="'Detalle del curso '+*{title}+' - '+*{commission}"></h1>
             <br/>
-            <!--<h4 style="font-weight: bold">Id: <span style="font-weight: normal" th:text="*{id}"></span></h4>-->
-            <!--<h4 style="font-weight: bold">Activa? <span style="font-weight: normal" th:text="*{active}"></span></h4>-->
-            <!--<h4 style="font-weight: bold">Password en dto: <span style="font-weight: normal" th:text="*{password}"></span></h4>-->
-            <!--<h4 style="font-weight: bold">Fecha de registro: <span style="font-weight: normal" th:text="*{registrationDate}"></span></h4>-->
-            <h4 style="font-weight: bold">Nombre: <span style="font-weight: normal" th:text="*{firstName}"></span></h4>
-            <h4 style="font-weight: bold">Apellido: <span style="font-weight: normal" th:text="*{lastName}"></span></h4>
-            <h4 style="font-weight: bold">Email: <span style="font-weight: normal" th:text="*{email}"></span></h4>
-            <h4 style="font-weight: bold">DNI: <span style="font-weight: normal" th:text="*{dni}"></span></h4>
-            <h4 style="font-weight: bold">Rol: <span style="font-weight: normal" th:text="*{role}"></span></h4>
-            <h4 style="font-weight: bold">Cuenta de gmail: <span style="font-weight: normal" th:text="*{gmailUser}"></span></h4>
-            <h4 style="font-weight: bold">Usuario de discord: <span style="font-weight: normal" th:text="*{discordUser}"></span></h4>
+            <h4 style="font-weight: bold">Id: <span style="font-weight: normal" th:text="*{id}"></span></h4>
+            <h4 style="font-weight: bold">Activo? <span style="font-weight: normal" th:text="*{active}"></span></h4>
+            <h4 style="font-weight: bold">Título: <span style="font-weight: normal" th:text="*{title}"></span></h4>
+            <h4 style="font-weight: bold">Comisión: <span style="font-weight: normal" th:text="*{commission}"></span></h4>
+            <h4 style="font-weight: bold">Fecha de inicio: <span style="font-weight: normal" th:text="*{startDate}"></span></h4>
+            <h4 style="font-weight: bold">Estado: <span style="font-weight: normal" th:text="*{status}"></span></h4>
+            <h4 style="font-weight: bold">Turno: <span style="font-weight: normal" th:text="*{turn}"></span></h4>
+            <h4 style="font-weight: bold">Descripción: <span style="font-weight: normal" th:text="*{description}"></span></h4>
+            <h4 style="font-weight: bold">Profesor ID: <span style="font-weight: normal" th:text="*{teacherId}"></span></h4>
+            <h4 style="font-weight: bold">Profesor: <span style="font-weight: normal" th:text="*{teacherFullName}"></span></h4>
             <br>
-            <h1 style="font-weight: bold">FALTA LISTADO DE CURSOS INSCRIPTOS</h1>
+            <h1 style="font-weight: bold">FALTA LISTADO DE ALUMNOS INSCRIPTOS</h1>
             <br>
 
             <a 
                 style="width: 120px"
                 class="btn btn-primary me-2"
                 th:if="${#authorization.expression('hasRole(''ADMIN'')')}"
-                th:href="@{/user/edit/{id}(id =__${dto.id}__)}"
+                th:href="@{/course/edit/{id}(id =__${dto.id}__)}"
                 >
                 Editar
             </a>
@@ -50,7 +49,7 @@
                 style="width: 120px"
                 class="btn btn-primary me-2"
                 th:if="${#authorization.expression('hasRole(''ADMIN'')') && dto.active == true}"
-                th:href="@{/user/deactivate/{id}(id =__${dto.id}__)}"
+                th:href="@{/course/deactivate/{id}(id =__${dto.id}__)}"
                 >
                 Desactivar
             </a>
@@ -58,7 +57,7 @@
                 style="width: 120px"
                 class="btn btn-primary me-2"
                 th:if="${#authorization.expression('hasRole(''ADMIN'')') &&dto.active == false}"
-                th:href="@{/user/activate/{id}(id =__${dto.id}__)}"
+                th:href="@{/course/activate/{id}(id =__${dto.id}__)}"
                 >
                 Reactivar
             </a>
