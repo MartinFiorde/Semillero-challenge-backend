@@ -22,11 +22,15 @@
                     class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom"
                     >
                     <a
-                        href="/"
+                        href="/index"
                         class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none"
                         >
                         <span class="fs-4">Prueba técnica semillero/ quinto impacto</span>
                     </a>
+                    <!--
+                        https://stackoverflow.com/questions/54677313/spring-mvc-and-thymeleaf-whats-the-difference-between-thvalue-and-thfield-w
+                        th:field sets the name, id, and value of a field. Doesn't work with th:each, use "th:value + name + id" instead.
+                    -->
                     <ul class="nav nav-pills">
                         <li
                             sec:authorize="hasAnyRole('ADMIN')"

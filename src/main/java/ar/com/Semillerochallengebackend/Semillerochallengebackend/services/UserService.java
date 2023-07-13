@@ -55,11 +55,15 @@ public class UserService implements UserServiceInterface, UserDetailsService {
 
     @Override
     public UserDTO edit(UserDTO d) throws ServiceRuntimeException {
-        User userInDB = userConverter.dtoToEntity(getOne(d.getId()));
+        User userInDB = userRepository.findById(d.getId()).get();
         User userModified = userConverter.dtoToEntity(d);
         userModified.setPassword(userInDB.getPassword());
-        System.out.println("regDate inDB: "+userInDB.getRegistrationDate());
-        System.out.println("regDate modif: "+userModified.getRegistrationDate());
+        userModified.setRegistrationDate(userInDB.getRegistrationDate());
+        userModified.setEmail(userInDB.getEmail());
+        if (userModified.getRole()==null) {
+            userModified.setRole(userInDB.getRole());
+        }
+        userValidation.validateUpdate(userConverter.entityToDto(userModified));
         return userConverter.entityToDto(userRepository.save(userModified));
     }
 
@@ -117,12 +121,7 @@ public class UserService implements UserServiceInterface, UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email).isEmpty() ? null : userRepository.findByEmail(email).get(0);
-        try {
-            if (user == null) throw new ServiceRuntimeException("User not found");
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-            throw new UsernameNotFoundException("User not found");
-        }
+        if (user == null) throw new UsernameNotFoundException("User not found");
         List<GrantedAuthority> permissions = new ArrayList();
         GrantedAuthority rolePermissions = new SimpleGrantedAuthority("ROLE_" + user.getRole().toString());
         permissions.add(rolePermissions);
@@ -152,5 +151,9 @@ public class UserService implements UserServiceInterface, UserDetailsService {
             throw new ServiceRuntimeException("La clave anterior no es correcta");
         }
         return true;
+    }
+    
+    public User findActiveById(String id) throws ServiceRuntimeException {
+        return userValidation.validateActiveStatus(userRepository.findById(id).orElse(null));
     }
 }

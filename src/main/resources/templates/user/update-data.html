@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Edit user</title>
+        <title>Register</title>
 
         <!-- Bootstrap core CSS -->
         <link
@@ -18,7 +18,7 @@
 
     <body>
         <!-- navbar -->
-            <nav th:replace="fragments/navbar.html :: header"></nav>
+        <nav th:replace="fragments/navbar.html :: header"></nav>
         <!-- end navbar -->
         <div class="container justify-content-center">
 
@@ -29,22 +29,24 @@
                 enctype="multipart/form-data"
                 method="POST"
                 >
-                <input type="hidden" th:if="${id != null}" name="id" th:value="${id}"/>
+                <input th:if="*{id != null}" name="id" th:field="*{id}"/>
+                <br th:if="*{id != null}" >
                 <input type="text" name="firstName" placeholder="Nombre" th:field="*{firstName}" required/>
                 <br>
-                <input type="text" name="lastName" placeholder="Apellido" th:value="*{lastName}" required/>
+                <input type="text" name="lastName" placeholder="Apellido" th:field="*{lastName}" required/>
                 <br>
-                <input type="email" name="email" placeholder="Email" th:value="*{email}" required/>
+                <input type="text" name="dni" placeholder="DNI" th:field="*{dni}" required/>
                 <br>
-                <select name="tipo" id="tipo" th:field="*{role}" required>
+                <input type="email" name="gmailUser" placeholder="Usuario de gmail" th:field="*{gmailUser}" required/>
+                <br>
+                <input type="text" name="discordUser" placeholder="Usuario de discord" th:field="*{discordUser}" required/>
+                <br sec:authorize="hasAnyRole('ADMIN')">
+                <select sec:authorize="hasAnyRole('ADMIN')" name="tipo" id="tipo" th:field="*{role}" required>
                     <option value="ADMIN">Admin</option>
                     <option value="TEACHER">Profesor</option>
                     <option value="STUDENT">Estudiante</option>
                 </select>
                 <br>
-                <input type="password" name="password" placeholder="Contraseña" required/>
-                <br>
-                <input type="password" name="passwordConfirm" placeholder="Repita la contraseña" required/>
                 <br>
                 <input type="submit" value="Aceptar" />
             </form>

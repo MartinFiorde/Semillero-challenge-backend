@@ -6,7 +6,9 @@ import ar.com.Semillerochallengebackend.Semillerochallengebackend.services.UserS
 import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.LIST;
 import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.DETAIL;
 import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.GET_ID;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.REGISTER;
+import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.DEACTIVATE;
+import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.ACTIVATE;
+import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.EDIT_PASS;
 import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.EDIT;
 import static ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.Constants.USER;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,42 +41,8 @@ public class UserController {
         return "user/list.html";
     }
 
-    @GetMapping(EDIT + GET_ID)
-    @PreAuthorize("hasAnyRole('ADMIN')")
-    public String changeOtherUserData(ModelMap model, @PathVariable String id) {
-        if (id.equals("session")) {
-            id = userService.sessionId();
-        }
-        model.put("dto", userService.getOne(id));
-        return "user/update-data.html";
-    }
-
-    @PostMapping(EDIT + GET_ID)
-    @PreAuthorize("hasAnyRole('ADMIN')")
-    public String changeOtherUserDataPost(ModelMap model, @ModelAttribute UserDTO dto, @RequestParam String id) {
-        try {
-            //userService.register(dto, passwordConfirm);
-            model.put("msg", "Se ha registrado correctamente!");
-            model.put("dto", userService.getOne(id));
-        return ("redirect:" + USER + DETAIL + "/" + id);
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-            model.put("msg", ex.getMessage());
-            model.put("dto", dto);
-            return "user/update-data.html";
-        }
-    }
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-
-    @GetMapping("/detail/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @GetMapping(DETAIL + GET_ID)
+    @PreAuthorize("isAuthenticated()")
     public String detailOtherUserData(ModelMap model, @PathVariable String id) throws ServiceRuntimeException {
         if (id.equals("session")) {
             id = userService.sessionId();
@@ -83,27 +51,29 @@ public class UserController {
         return "user/detail.html";
     }
 
-    @GetMapping("/deactivate/{id}")
+    @GetMapping(DEACTIVATE + GET_ID)
     @PreAuthorize("hasAnyRole('ADMIN')")
     public String deactivateUser(ModelMap model, @PathVariable String id) throws ServiceRuntimeException {
+        model.put("msg", "Usuario desactivado");
         model.put("dto", userService.deactivate(id));
-        return ("redirect:" + USER + DETAIL + "/" + id);
+        return "user/detail.html";
     }
 
-    @GetMapping("/activate/{id}")
+    @GetMapping(ACTIVATE + GET_ID)
     @PreAuthorize("hasAnyRole('ADMIN')")
     public String activateUser(ModelMap model, @PathVariable String id) throws ServiceRuntimeException {
+        model.put("msg", "Usuario reactivado!");
         model.put("dto", userService.activate(id));
-        return ("redirect:" + USER + DETAIL + "/" + id);
+        return "user/detail.html";
     }
 
-    @GetMapping("/changePass")
+    @GetMapping(EDIT_PASS)
     @PreAuthorize("isAuthenticated()")
     public String changePassword(ModelMap model) {
         return "/user/update-pass.html";
     }
 
-    @PostMapping("/changePass")
+    @PostMapping(EDIT_PASS)
     @PreAuthorize("isAuthenticated()")
     public String changePasswordPost(ModelMap model, @RequestParam String password, @RequestParam String passwordNew, @RequestParam String passwordConfirm) {
         try {
@@ -117,4 +87,29 @@ public class UserController {
         }
     }
 
+    @GetMapping(EDIT + GET_ID)
+    @PreAuthorize("isAuthenticated()")
+    public String changeOtherUserData(ModelMap model, @PathVariable String id) {
+         if (id.equals("session")) {
+            id = userService.sessionId();
+        }
+        model.put("dto", userService.getOne(id));
+        return "user/update-data.html";
+    }
+
+    @PostMapping(EDIT)
+    @PreAuthorize("isAuthenticated()")
+    public String changeOtherUserDataPost(ModelMap model, @ModelAttribute UserDTO dto, @RequestParam String id) {
+        try {
+            userService.edit(dto);
+            model.put("msg", "Los datos se han editado correctamente!");
+            model.put("dto", userService.getOne(id));
+            return "user/detail.html";
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            model.put("msg", ex.getMessage());
+            model.put("dto", dto);
+            return "user/update-data.html";
+        }
+    }
 }
