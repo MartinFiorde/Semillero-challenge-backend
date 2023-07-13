@@ -49,7 +49,7 @@
                 style="width: 120px"
                 class="btn btn-primary me-2"
                 th:if="${#authorization.expression('hasRole(''STUDENT'')')}"
-                th:href="@{/user/addCourse/{id}(id =__${dto.id}__)}"
+                th:href="@{/course/addToUser/{id}(id =__${dto.id}__)}"
                 >
                 Tomar curso
             </a>
@@ -57,7 +57,7 @@
                 style="width: 120px"
                 class="btn btn-primary me-2"
                 th:if="${#authorization.expression('hasAnyRole(''ADMIN'',''TEACHER'')') && dto.teacherId == null}"
-                th:href="@{/course/addTeacher}"
+                th:href="@{/course/addTeacher/{id}(id =__${dto.id}__)}"
                 >
                 Dictar curso
             </a>
@@ -65,7 +65,7 @@
                 style="width: 120px"
                 class="btn btn-danger me-2"
                 th:if="${#authorization.expression('hasAnyRole(''ADMIN'',''TEACHER'')') && dto.teacherId != null}"
-                th:href="@{/course/deleteTeacher}"
+                th:href="@{/course/deleteTeacher/{id}(id =__${dto.id}__)}"
                 >
                 Quitar profe
             </a>

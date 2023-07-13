@@ -103,17 +103,7 @@ public class UserService implements UserServiceInterface, UserDetailsService {
     }
     
     @Override
-    public List<UserDTO> getStudentsByCourse(String courseId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public List<UserDTO> findLikeName(String firstName, String lastName) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public UserDTO addCourse(String courseId) throws ServiceRuntimeException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
