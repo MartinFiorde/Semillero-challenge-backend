@@ -1,9 +1,11 @@
 package ar.com.Semillerochallengebackend.Semillerochallengebackend.services;
 
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.UserRoleEnum;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.converters.CourseConverter;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.errors.ServiceRuntimeException;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.Course;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.User;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.converters.UserConverter;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.CourseDTO;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.UserDTO;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.repositories.CourseRepository;
@@ -24,14 +26,16 @@ public class CourseService implements CourseServiceInterface {
     private CourseValidator courseValidation;
     private UserService userService;
     private UserRepository userRepository;
+    private UserConverter userConverter;
 
     @Autowired
-    public CourseService(CourseRepository courseRepository, CourseConverter courseConverter, CourseValidator courseValidation, UserService userService, UserRepository userRepository) {
+    public CourseService(CourseRepository courseRepository, CourseConverter courseConverter, CourseValidator courseValidation, UserService userService, UserRepository userRepository, UserConverter userConverter) {
         this.courseRepository = courseRepository;
         this.courseConverter = courseConverter;
         this.courseValidation = courseValidation;
         this.userService = userService;
         this.userRepository = userRepository;
+        this.userConverter = userConverter;
     }
 
     // METHODS
@@ -96,8 +100,8 @@ public class CourseService implements CourseServiceInterface {
 //
 //
     @Override
-    public CourseDTO addTeacher(String id) throws ServiceRuntimeException {
-        Course course = courseRepository.findById(id).orElse(null);
+    public CourseDTO addTeacher(String courseId) throws ServiceRuntimeException {
+        Course course = courseRepository.findById(courseId).orElse(null);
         User teacher = userRepository.findById(userService.sessionId()).orElse(null);
         if (teacher == null || course == null) {
             throw new ServiceRuntimeException("El ID ingresado no es válido.");
@@ -105,6 +109,7 @@ public class CourseService implements CourseServiceInterface {
 
         course.setTeacherId(teacher.getId());
         course.setTeacherFullName(teacher.getLastName() + " " + teacher.getFirstName());
+        System.out.println("anda antes de guardar el curso");
         courseRepository.save(course);
 
         List<Course> teacherCourses = teacher.getCourses();
@@ -113,13 +118,16 @@ public class CourseService implements CourseServiceInterface {
         }
         teacherCourses.add(course);
         teacher.setCourses(teacherCourses);
-        userRepository.save(teacher);
+        System.out.println("anda antes de guardar el curso dentro del user");
+        System.out.println("teacherId: "+teacher.getId());
+        // userRepository.save(teacher);
+        System.out.println("---------------------------------- murio?");
         return courseConverter.entityToDto(course);
     }
 
     @Override
-    public CourseDTO deleteTeacher(String id) throws ServiceRuntimeException {
-        Course course = courseRepository.findById(id).orElse(null);
+    public CourseDTO deleteTeacher(String courseId) throws ServiceRuntimeException {
+        Course course = courseRepository.findById(courseId).orElse(null);
         if (course == null) {
             throw new ServiceRuntimeException("El ID ingresado no es válido.");
         }
@@ -152,8 +160,26 @@ public class CourseService implements CourseServiceInterface {
     }
 
     @Override
-    public UserDTO addCourseToUser(String courseId) throws ServiceRuntimeException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public CourseDTO addToStudent(String courseId) throws ServiceRuntimeException {
+        Course course = courseRepository.findById(courseId).orElse(null);
+        User student = userRepository.findById(userService.sessionId()).orElse(null);
+        if (student == null || course == null || !student.getRole().equals(UserRoleEnum.STUDENT)) {
+            throw new ServiceRuntimeException("El ID ingresado no es válido.");
+        }
+
+        List<Course> studentCourses = student.getCourses();
+        if (studentCourses == null) {
+            studentCourses = new ArrayList<>();
+        }
+        for (int i = 0; i < studentCourses.size(); i++) {
+            if (studentCourses.get(i).getId().equals(course.getId())) {
+                throw new ServiceRuntimeException("Ya te encuentras inscripto al curso.");
+            }
+        }
+        studentCourses.add(course);
+        student.setCourses(studentCourses);
+        userRepository.save(student);
+        return courseConverter.entityToDto(course);
     }
 
     @Override

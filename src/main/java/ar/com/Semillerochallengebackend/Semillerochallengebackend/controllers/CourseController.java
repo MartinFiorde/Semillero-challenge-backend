@@ -46,7 +46,7 @@ public class CourseController {
         try {
             CourseDTO savedDTO = courseService.create(dto);
             model.put("msg", "El curso se ha creado exitosamente!");
-            model.put("dto",savedDTO);
+            model.put("dto", savedDTO);
             return "course/detail.html";
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -108,20 +108,46 @@ public class CourseController {
             return "course/update-data.html";
         }
     }
-    
-    @GetMapping("/addTeacher"+GET_ID)
+
+    @GetMapping("/addTeacher" + GET_ID)
     @PreAuthorize("hasAnyRole('ADMIN','TEACHER')")
-    public String addTeacher(ModelMap model, @PathVariable String id) throws ServiceRuntimeException {
-        model.put("msg", "Te has asignado como profesor del curso.");
-        model.put("dto", courseService.addTeacher(id));
-        return "course/detail.html";
+    public String addTeacher(ModelMap model, @PathVariable String id) {
+        try {
+            model.put("msg", "Te has asignado como profesor del curso.");
+            model.put("dto", courseService.addTeacher(id));
+            System.out.println("antes de return try-------------------------------");
+            return "course/detail.html";
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            System.out.println("--------------catch controller");
+            model.put("msg", ex.getMessage());
+            model.put("dto", courseService.getOne(id));
+            return "course/detail.html";
+        }
+
     }
-    
-    @GetMapping("/deleteTeacher"+GET_ID)
+
+    @GetMapping("/deleteTeacher" + GET_ID)
     @PreAuthorize("hasAnyRole('ADMIN','TEACHER')")
     public String deleteTeacher(ModelMap model, @PathVariable String id) throws ServiceRuntimeException {
         model.put("msg", "Se ha removido al profesor del curso.");
         model.put("dto", courseService.deleteTeacher(id));
         return "course/detail.html";
     }
+
+    @GetMapping("/addToStudent" + GET_ID)
+    @PreAuthorize("hasAnyRole('STUDENT')")
+    public String addToStudent(ModelMap model, @PathVariable String id) {
+        try {
+            model.put("msg", "Te has inscripto al curso!");
+            model.put("dto", courseService.addToStudent(id));
+            return "course/detail.html";
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            model.put("msg", ex.getMessage());
+            model.put("dto", courseService.getOne(id));
+            return "course/detail.html";
+        }
+    }
+
 }

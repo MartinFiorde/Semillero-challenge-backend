@@ -49,7 +49,7 @@
                 style="width: 120px"
                 class="btn btn-primary me-2"
                 th:if="${#authorization.expression('hasRole(''STUDENT'')')}"
-                th:href="@{/course/addToUser/{id}(id =__${dto.id}__)}"
+                th:href="@{/course/addToStudent/{id}(id =__${dto.id}__)}"
                 >
                 Tomar curso
             </a>
