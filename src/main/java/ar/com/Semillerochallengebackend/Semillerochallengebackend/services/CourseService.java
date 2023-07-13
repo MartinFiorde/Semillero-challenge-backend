@@ -5,7 +5,6 @@ import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.convert
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.errors.ServiceRuntimeException;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.Course;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.User;
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.converters.UserConverter;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.CourseDTO;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.UserDTO;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.repositories.CourseRepository;
@@ -26,16 +25,14 @@ public class CourseService implements CourseServiceInterface {
     private CourseValidator courseValidation;
     private UserService userService;
     private UserRepository userRepository;
-    private UserConverter userConverter;
 
     @Autowired
-    public CourseService(CourseRepository courseRepository, CourseConverter courseConverter, CourseValidator courseValidation, UserService userService, UserRepository userRepository, UserConverter userConverter) {
+    public CourseService(CourseRepository courseRepository, CourseConverter courseConverter, CourseValidator courseValidation, UserService userService, UserRepository userRepository) {
         this.courseRepository = courseRepository;
         this.courseConverter = courseConverter;
         this.courseValidation = courseValidation;
         this.userService = userService;
         this.userRepository = userRepository;
-        this.userConverter = userConverter;
     }
 
     // METHODS
@@ -186,5 +183,4 @@ public class CourseService implements CourseServiceInterface {
     public List<UserDTO> getStudentsByCourse(String courseId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
 }

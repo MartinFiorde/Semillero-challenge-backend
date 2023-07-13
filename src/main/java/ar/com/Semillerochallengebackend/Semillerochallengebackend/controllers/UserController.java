@@ -10,6 +10,7 @@ import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.C
 import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.ACTIVATE;
 import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.EDIT_PASS;
 import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.EDIT;
+import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.SEARCH;
 import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.USER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -111,5 +112,19 @@ public class UserController {
             model.put("dto", dto);
             return "user/update-data.html";
         }
+    }
+
+    @GetMapping(SEARCH)
+    @PreAuthorize("permitAll()")
+    public String registerUser(ModelMap model) {
+        model.put("dto", new UserDTO());
+        return "user/search.html";
+    }
+    
+    @PostMapping(SEARCH) 
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public String findLikeName(ModelMap model, @ModelAttribute UserDTO dto) {
+        model.put("dtos", userService.findLikeName(dto.getFirstName(), dto.getLastName()));
+        return "user/list.html";
     }
 }

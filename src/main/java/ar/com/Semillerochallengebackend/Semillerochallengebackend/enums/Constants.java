@@ -20,6 +20,7 @@ public final class Constants {
     public static final String EDIT_PASS = "/changePass";
     public static final String DETAIL = "/detail";
     public static final String LIST = "/list";
+    public static final String SEARCH = "/search";
     public static final String DEACTIVATE = "/deactivate";
     public static final String LIST_ALL = "/list-all";
     public static final String ACTIVATE = "/activate";
