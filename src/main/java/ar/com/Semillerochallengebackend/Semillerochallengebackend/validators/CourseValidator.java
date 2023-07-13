@@ -22,16 +22,8 @@ public class CourseValidator {
         return dto;
     }
 
-    public CourseDTO validateUpdate(CourseDTO dto) throws ServiceRuntimeException {
-//        validateRole(dto.getRole());
-//        validateGenericString(dto.getFirstName());
-//        validateGenericString(dto.getLastName());
-//        validateGenericString(dto.getFirstName());
-//        validateGenericString(dto.getDiscordCourse());
-//        validateGenericString(dto.getGmailCourse());
-//        validateGenericString(dto.getDni());
-//        dto.setRegistrationDate(LocalDateTime.now());
-        return dto;
+    public CourseDTO updateValidator(CourseDTO dto) throws ServiceRuntimeException {
+        return createValidator(dto);
     }
 
     public String validateStatus(String status) throws ServiceRuntimeException {
@@ -56,16 +48,6 @@ public class CourseValidator {
         throw new ServiceRuntimeException("El turno ingresado no es válido.");
     }
 
-    public String validatePasswords(String password, String passwordConfirm) throws ServiceRuntimeException {
-        if (StringUtils.nullOrEmpty(password) || password.trim().length() < 4) {
-            throw new ServiceRuntimeException("La clave debe tener más de 4 carácteres.");
-        }
-        if (!password.equals(passwordConfirm)) {
-            throw new ServiceRuntimeException("Las claves no coinciden.");
-        }
-        return password;
-    }
-
     public String validateGenericString(String string) throws ServiceRuntimeException {
         if (StringUtils.nullOrEmpty(string)) {
             throw new ServiceRuntimeException("No puede haber campos vacios.");
@@ -74,9 +56,7 @@ public class CourseValidator {
     }
 
     public Integer validateCommission(Integer number) throws ServiceRuntimeException {
-        if (StringUtils.nullOrEmpty(number.toString())) {
-            throw new ServiceRuntimeException("No puede haber campos vacios.");
-        }
+        validateGenericString(number.toString());
         if (number <= 0) {
             throw new ServiceRuntimeException("Debe ingresar un numero de comisión válido.");
         }
@@ -90,7 +70,7 @@ public class CourseValidator {
 
     public Course validateActiveStatus(Course course) throws ServiceRuntimeException {
         if (!course.isActive()) {
-            throw new ServiceRuntimeException("El usuario solicitado se encuentra deshabilitado.");
+            throw new ServiceRuntimeException("El curso solicitado se encuentra deshabilitado.");
         }
         return course;
     }

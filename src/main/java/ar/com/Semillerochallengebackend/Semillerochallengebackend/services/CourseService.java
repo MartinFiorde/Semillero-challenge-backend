@@ -18,12 +18,14 @@ public class CourseService implements CourseServiceInterface {
     private CourseRepository courseRepository;
     private CourseConverter courseConverter;
     private CourseValidator courseValidation;
+    private UserService userService;
 
     @Autowired
-    public CourseService(CourseRepository courseRepository, CourseConverter courseConverter, CourseValidator courseValidation) {
+    public CourseService(CourseRepository courseRepository, CourseConverter courseConverter, CourseValidator courseValidation, UserService userService) {
         this.courseRepository = courseRepository;
         this.courseConverter = courseConverter;
         this.courseValidation = courseValidation;
+        this.userService = userService;
     }
 
     // METHODS
@@ -44,13 +46,10 @@ public class CourseService implements CourseServiceInterface {
     public CourseDTO edit(CourseDTO d) throws ServiceRuntimeException {
         Course courseInDB = courseRepository.findById(d.getId()).get();
         Course courseModified = courseConverter.dtoToEntity(d);
-//        courseModified.setPassword(courseInDB.getPassword());
-//        courseModified.setRegistrationDate(courseInDB.getRegistrationDate());
-//        courseModified.setEmail(courseInDB.getEmail());
-//        if (courseModified.getRole()==null) {
-//            courseModified.setRole(courseInDB.getRole());
-//        }
-        courseValidation.validateUpdate(courseConverter.entityToDto(courseModified));
+        courseModified.setActive(courseInDB.isActive());
+        courseModified.setTeacherId(courseInDB.getTeacherId());
+        courseModified.setTeacherFullName(courseInDB.getTeacherFullName());
+        courseValidation.updateValidator(courseConverter.entityToDto(courseModified));
         return courseConverter.entityToDto(courseRepository.save(courseModified));
     }
 

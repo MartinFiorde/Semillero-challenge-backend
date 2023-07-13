@@ -55,6 +55,7 @@ public class UserService implements UserServiceInterface, UserDetailsService {
     public UserDTO edit(UserDTO d) throws ServiceRuntimeException {
         User userInDB = userRepository.findById(d.getId()).get();
         User userModified = userConverter.dtoToEntity(d);
+        userModified.setActive(userInDB.isActive());
         userModified.setPassword(userInDB.getPassword());
         userModified.setRegistrationDate(userInDB.getRegistrationDate());
         userModified.setEmail(userInDB.getEmail());
