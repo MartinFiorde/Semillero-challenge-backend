@@ -18,7 +18,7 @@
 
     <body>
         <!-- navbar -->
-            <nav th:replace="fragments/navbar.html :: header"></nav>
+        <nav th:replace="fragments/navbar.html :: header"></nav>
         <!-- end navbar -->
         <div class="container justify-content-center">
 
@@ -29,7 +29,6 @@
                 enctype="multipart/form-data"
                 method="POST"
                 >
-                <input type="hidden" th:if="${id != null}" name="id" th:value="${id}"/>
                 <input type="text" name="firstName" placeholder="Nombre" th:field="*{firstName}" required/>
                 <br>
                 <input type="text" name="lastName" placeholder="Apellido" th:value="*{lastName}" required/>
@@ -46,6 +45,7 @@
                 <br>
                 <input type="password" name="passwordConfirm" placeholder="Repita la contraseña" required/>
                 <br>
+                <br />
                 <input type="submit" value="Aceptar" />
             </form>
             <p

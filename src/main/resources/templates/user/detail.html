@@ -23,24 +23,25 @@
         <div th:object="${dto}" class="container justify-content-center">
             <h1 th:text="'Datos del usuario '+*{firstName}+' '+*{lastName}"></h1>
             <br/>
-            <h3 style="font-weight: bold">Id: <span style="font-weight: normal" th:text="*{id}"></span></h2>
-            <h3 style="font-weight: bold">Activa? <span style="font-weight: normal" th:text="*{active}"></span></h2>
-            <h3 style="font-weight: bold">Password en dto: <span style="font-weight: normal" th:text="*{password}"></span></h2>
-            <h3 style="font-weight: bold">Fecha de registro: <span style="font-weight: normal" th:text="*{registrationDate}"></span></h2>
-            <h3 style="font-weight: bold">Email: <span style="font-weight: normal" th:text="*{email}"></span></h2>
-            <h3 style="font-weight: bold">Nombre: <span style="font-weight: normal" th:text="*{firstName}"></span></h2>
-            <h3 style="font-weight: bold">Apellido: <span style="font-weight: normal" th:text="*{lastName}"></span></h2>
-            <h3 style="font-weight: bold">DNI: <span style="font-weight: normal" th:text="*{dni}"></span></h2>
-            <h3 style="font-weight: bold">Rol: <span style="font-weight: normal" th:text="*{role}"></span></h2>
-            <h3 style="font-weight: bold">Cuenta de gmail: <span style="font-weight: normal" th:text="*{gmailUser}"></span></h2>
-            <h3 style="font-weight: bold">Usuario de discord: <span style="font-weight: normal" th:text="*{discordUser}"></span></h2>
-
+            <!--<h4 style="font-weight: bold">Id: <span style="font-weight: normal" th:text="*{id}"></span></h4>-->
+            <!--<h4 style="font-weight: bold">Activa? <span style="font-weight: normal" th:text="*{active}"></span></h4>-->
+            <!--<h4 style="font-weight: bold">Password en dto: <span style="font-weight: normal" th:text="*{password}"></span></h4>-->
+            <!--<h4 style="font-weight: bold">Fecha de registro: <span style="font-weight: normal" th:text="*{registrationDate}"></span></h4>-->
+            <h4 style="font-weight: bold">Nombre: <span style="font-weight: normal" th:text="*{firstName}"></span></h4>
+            <h4 style="font-weight: bold">Apellido: <span style="font-weight: normal" th:text="*{lastName}"></span></h4>
+            <h4 style="font-weight: bold">Email: <span style="font-weight: normal" th:text="*{email}"></span></h4>
+            <h4 style="font-weight: bold">DNI: <span style="font-weight: normal" th:text="*{dni}"></span></h4>
+            <h4 style="font-weight: bold">Rol: <span style="font-weight: normal" th:text="*{role}"></span></h4>
+            <h4 style="font-weight: bold">Cuenta de gmail: <span style="font-weight: normal" th:text="*{gmailUser}"></span></h4>
+            <h4 style="font-weight: bold">Usuario de discord: <span style="font-weight: normal" th:text="*{discordUser}"></span></h4>
+            <br>
             <h1 style="font-weight: bold">FALTA LISTADO DE CURSOS INSCRIPTOS</h1>
+            <br>
 
-            
             <a 
                 style="width: 120px"
                 class="btn btn-primary me-2"
+                th:if="${#authorization.expression('hasRole(''ADMIN'')')}"
                 th:href="@{/user/edit/{id}(id =__${dto.id}__)}"
                 >
                 Editar
@@ -48,7 +49,7 @@
             <a 
                 style="width: 120px"
                 class="btn btn-primary me-2"
-                th:if="${dto.active == true}"
+                th:if="${#authorization.expression('hasRole(''ADMIN'')') && dto.active == true}"
                 th:href="@{/user/deactivate/{id}(id =__${dto.id}__)}"
                 >
                 Desactivar
@@ -56,7 +57,7 @@
             <a
                 style="width: 120px"
                 class="btn btn-primary me-2"
-                th:if="${dto.active == false}"
+                th:if="${#authorization.expression('hasRole(''ADMIN'')') &&dto.active == false}"
                 th:href="@{/user/activate/{id}(id =__${dto.id}__)}"
                 >
                 Reactivar

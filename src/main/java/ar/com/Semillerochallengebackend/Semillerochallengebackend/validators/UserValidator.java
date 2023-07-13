@@ -3,6 +3,7 @@ package ar.com.Semillerochallengebackend.Semillerochallengebackend.validators;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.UserDTO;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.UserRole;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.errors.ServiceRuntimeException;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.User;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.repositories.UserRepository;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.StringUtils;
 import java.time.LocalDateTime;
@@ -30,7 +31,19 @@ public class UserValidator {
         return dto;
     }
 
-    public String validateRole(String role) {
+    public UserDTO validateUpdate(UserDTO dto) throws ServiceRuntimeException {
+        validateRole(dto.getRole());
+        validateGenericString(dto.getFirstName());
+        validateGenericString(dto.getLastName());
+        validateGenericString(dto.getFirstName());
+        validateGenericString(dto.getDiscordUser());
+        validateGenericString(dto.getGmailUser());
+        validateGenericString(dto.getDni());
+        dto.setRegistrationDate(LocalDateTime.now());
+        return dto;
+    }
+
+    public String validateRole(String role) throws ServiceRuntimeException {
         validateGenericString(role);
         UserRole[] userRoles = UserRole.values();
         for (UserRole userRole : userRoles) {
@@ -71,5 +84,12 @@ public class UserValidator {
             throw new ServiceRuntimeException("Ya existe un usuario con el mail seleccionado.");
         }
         return email.toLowerCase();
+    }
+
+    public User validateActiveStatus(User user) throws ServiceRuntimeException {
+        if (!user.isActive()) {
+            throw new ServiceRuntimeException("El usuario solicitado se encuentra deshabilitado.");
+        }
+        return user;
     }
 }
