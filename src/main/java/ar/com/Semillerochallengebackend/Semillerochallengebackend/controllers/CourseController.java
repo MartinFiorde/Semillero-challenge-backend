@@ -136,6 +136,7 @@ public class CourseController {
     public String deleteTeacher(ModelMap model, @PathVariable String id) throws ServiceRuntimeException {
         model.put("msg", "Se ha removido al profesor del curso.");
         model.put("dto", courseService.deleteTeacher(id));
+        model.put("students", courseService.getStudentsByCourse(id));
         return "course/detail.html";
     }
 
@@ -145,11 +146,13 @@ public class CourseController {
         try {
             model.put("msg", "Te has inscripto al curso!");
             model.put("dto", courseService.addToStudent(id));
+            model.put("students", courseService.getStudentsByCourse(id));
             return "course/detail.html";
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             model.put("msg", ex.getMessage());
             model.put("dto", courseService.getOne(id));
+            model.put("students", courseService.getStudentsByCourse(id));
             return "course/detail.html";
         }
     }
