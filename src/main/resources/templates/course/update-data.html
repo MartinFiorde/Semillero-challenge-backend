@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Register</title>
+        <title>Edit course</title>
 
         <!-- Bootstrap core CSS -->
         <link
@@ -22,30 +22,35 @@
         <!-- end navbar -->
         <div class="container justify-content-center">
 
-            <h1>Editar datos de usuario</h1>
+            <h1>Editar los datos del curso</h1>
             <form
-                th:action="@{/user/edit}"
+                th:action="@{/course/edit}"
                 th:object="${dto}"
                 enctype="multipart/form-data"
                 method="POST"
                 >
-                <input th:if="*{id != null}" name="id" th:field="*{id}"/>
+                <input type="hidden" th:if="*{id != null}" name="id" th:field="*{id}"/>
                 <br th:if="*{id != null}" >
-                <input type="text" name="firstName" placeholder="Nombre" th:field="*{firstName}" required/>
+                <input type="text" name="title" placeholder="Título" th:field="*{title}" required/>
                 <br>
-                <input type="text" name="lastName" placeholder="Apellido" th:field="*{lastName}" required/>
+                <input type="number" name="commission" placeholder="Comisión" th:field="*{commission}" required/>
                 <br>
-                <input type="text" name="dni" placeholder="DNI" th:field="*{dni}" required/>
+                <input type="date" name="startDate" placeholder="Fecha de inicio" th:field="*{startDate}" required/>
                 <br>
-                <input type="email" name="gmailUser" placeholder="Usuario de gmail" th:field="*{gmailUser}" required/>
-                <br>
-                <input type="text" name="discordUser" placeholder="Usuario de discord" th:field="*{discordUser}" required/>
-                <br sec:authorize="hasAnyRole('ADMIN')">
-                <select sec:authorize="hasAnyRole('ADMIN')" name="tipo" id="tipo" th:field="*{role}" required>
-                    <option value="ADMIN">Admin</option>
-                    <option value="TEACHER">Profesor</option>
-                    <option value="STUDENT">Estudiante</option>
+                <select name="status" id="status" th:field="*{status}" required>
+                    <option value="PROGRAMED">Programado</option>
+                    <option value="IN_PROGRESS">En progreso</option>
+                    <option value="CANCELLED">Cancelado</option>
+                    <option value="FINISHED">Terminado</option>
                 </select>
+                <br>
+                <select name="turn" id="turn" th:field="*{turn}" required>
+                    <option value="MORNING">A la mañana</option>
+                    <option value="AFTERNOON">A la tarde</option>
+                    <option value="NIGHT">A la noche</option>
+                </select>
+                <br>
+                <input type="text" name="description" placeholder="Descripción" th:field="*{description}" required/>
                 <br>
                 <br>
                 <input type="submit" value="Aceptar" />

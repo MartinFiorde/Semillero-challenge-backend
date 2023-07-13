@@ -34,14 +34,14 @@ public class CourseController {
     }
 
     @GetMapping(SAVE)
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN','TEACHER')")
     public String createCourse(ModelMap model) {
         model.put("dto", new CourseDTO());
         return "/course/create.html";
     }
 
     @PostMapping(SAVE)
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN','TEACHER')")
     public String createCoursePost(ModelMap model, @ModelAttribute CourseDTO dto) {
         try {
             CourseDTO savedDTO = courseService.create(dto);
@@ -71,7 +71,7 @@ public class CourseController {
     }
 
     @GetMapping(DEACTIVATE + GET_ID)
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN','TEACHER')")
     public String deactivateCourse(ModelMap model, @PathVariable String id) throws ServiceRuntimeException {
         model.put("msg", "Usuario desactivado");
         model.put("dto", courseService.deactivate(id));
@@ -79,7 +79,7 @@ public class CourseController {
     }
 
     @GetMapping(ACTIVATE + GET_ID)
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN','TEACHER')")
     public String activateCourse(ModelMap model, @PathVariable String id) throws ServiceRuntimeException {
         model.put("msg", "Usuario reactivado!");
         model.put("dto", courseService.activate(id));
@@ -87,14 +87,14 @@ public class CourseController {
     }
 
     @GetMapping(EDIT + GET_ID)
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN','TEACHER')")
     public String changeOtherCourseData(ModelMap model, @PathVariable String id) {
         model.put("dto", courseService.getOne(id));
         return "course/update-data.html";
     }
 
     @PostMapping(EDIT)
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN','TEACHER')")
     public String changeOtherCourseDataPost(ModelMap model, @ModelAttribute CourseDTO dto) {
         try {
             courseService.edit(dto);

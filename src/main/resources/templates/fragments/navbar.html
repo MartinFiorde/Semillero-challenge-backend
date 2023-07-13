@@ -81,7 +81,7 @@
                                 class="dropdown-menu"
                                 aria-labelledby="dropdown03"
                                 >
-                                 <li>
+                                 <li sec:authorize="hasAnyRole('ADMIN','TEACHER')">
                                     <a
                                         class="dropdown-item"
                                         th:href="@{/course/save/}"
@@ -95,13 +95,13 @@
                                         >Ver todos los cursos</a
                                     >
                                 </li>
-                                <li>
+                                <!--<li>
                                     <a
                                         class="dropdown-item"
                                         th:href="@{/course/search}"
                                         >Buscar cursos</a
                                     >
-                                </li>
+                                </li>-->
                             </ul>
                         </li>
 
