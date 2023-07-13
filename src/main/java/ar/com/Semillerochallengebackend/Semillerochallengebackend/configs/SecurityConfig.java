@@ -1,4 +1,4 @@
-package ar.com.Semillerochallengebackend.Semillerochallengebackend.configurations;
+package ar.com.Semillerochallengebackend.Semillerochallengebackend.configs;
 
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.services.UserService;
 import java.util.Arrays;
@@ -18,7 +18,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
     // INSTANCES
     @Autowired

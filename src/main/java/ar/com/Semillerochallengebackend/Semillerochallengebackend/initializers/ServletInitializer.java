@@ -1,5 +1,6 @@
-package ar.com.Semillerochallengebackend.Semillerochallengebackend;
+package ar.com.Semillerochallengebackend.Semillerochallengebackend.initializers;
 
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.Application;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
@@ -7,7 +8,7 @@ public class ServletInitializer extends SpringBootServletInitializer {
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(SemilleroChallengeBackendApplication.class);
+		return application.sources(Application.class);
 	}
 
 }

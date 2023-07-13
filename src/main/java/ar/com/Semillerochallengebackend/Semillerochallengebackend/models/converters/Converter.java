@@ -1,4 +1,4 @@
-package ar.com.Semillerochallengebackend.Semillerochallengebackend.entities.converters;
+package ar.com.Semillerochallengebackend.Semillerochallengebackend.models.converters;
 
 import java.util.ArrayList;
 import java.util.List;

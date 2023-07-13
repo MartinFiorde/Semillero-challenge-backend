@@ -1,12 +1,12 @@
 package ar.com.Semillerochallengebackend.Semillerochallengebackend.services;
 
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.entities.converters.CourseConverter;
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.entities.dto.CourseDTO;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.converters.CourseConverter;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.CourseDTO;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.errors.ServiceRuntimeException;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.repositories.CourseRepository;
 import java.util.List;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.services.interfaces.CourseServiceInterface;
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.validations.CourseValidation;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.validators.CourseValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +16,10 @@ public class CourseService implements CourseServiceInterface {
     // INSTANCES AND CONSTRUCTOR
     private CourseRepository courseRepository;
     private CourseConverter courseConverter;
-    private CourseValidation courseValidation;
+    private CourseValidator courseValidation;
 
     @Autowired
-    public CourseService(CourseRepository courseRepository, CourseConverter courseConverter, CourseValidation courseValidation) {
+    public CourseService(CourseRepository courseRepository, CourseConverter courseConverter, CourseValidator courseValidation) {
         this.courseRepository = courseRepository;
         this.courseConverter = courseConverter;
         this.courseValidation = courseValidation;
@@ -51,6 +51,11 @@ public class CourseService implements CourseServiceInterface {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public CourseDTO activate(String id) throws ServiceRuntimeException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
     @Override
     public List<CourseDTO> findByTitle(String email) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

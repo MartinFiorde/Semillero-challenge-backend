@@ -1,4 +1,4 @@
-package ar.com.Semillerochallengebackend.Semillerochallengebackend.entities.dto;
+package ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;

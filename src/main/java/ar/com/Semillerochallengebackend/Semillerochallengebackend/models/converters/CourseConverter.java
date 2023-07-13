@@ -1,7 +1,7 @@
-package ar.com.Semillerochallengebackend.Semillerochallengebackend.entities.converters;
+package ar.com.Semillerochallengebackend.Semillerochallengebackend.models.converters;
 
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.entities.Course;
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.entities.dto.CourseDTO;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.Course;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.CourseDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ParseException;

@@ -1,6 +1,6 @@
 package ar.com.Semillerochallengebackend.Semillerochallengebackend.services.interfaces;
 
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.entities.dto.CourseDTO;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.CourseDTO;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.errors.ServiceRuntimeException;
 import java.util.List;
 import org.springframework.transaction.annotation.Propagation;

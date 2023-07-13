@@ -1,4 +1,4 @@
-package ar.com.Semillerochallengebackend.Semillerochallengebackend.entities;
+package ar.com.Semillerochallengebackend.Semillerochallengebackend.models;
 
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.CourseStatus;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.CourseTurn;
