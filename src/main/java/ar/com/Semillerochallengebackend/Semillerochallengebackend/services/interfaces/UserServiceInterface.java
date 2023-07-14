@@ -12,5 +12,5 @@ public interface UserServiceInterface extends CRUDServiceInterface<UserDTO>{
     public UserDTO register(UserDTO d, String passwordConfirm) throws ServiceRuntimeException;
     
     @Transactional(readOnly = true)
-    public List<UserDTO> findLikeName(String firstName, String lastName);
+    public List<UserDTO> findLikeName(String firstName);
 }

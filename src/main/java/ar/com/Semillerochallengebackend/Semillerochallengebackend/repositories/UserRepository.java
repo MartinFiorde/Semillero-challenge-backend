@@ -17,13 +17,17 @@ public interface UserRepository extends JpaRepository<User, String> {
     public List<User> findByFirstName(String search);
 
     public List<User> findByLastName(String search);
-    
+
     public List<User> findByEmail(String search);
 
     @Query(value = "SELECT * FROM user "
             + "WHERE user.first_name LIKE %:firstName% "
-            + "OR user.last_name LIKE %:lastName%", nativeQuery = true)
-    public List<User> findLikeName(@Param("firstName") String firstName, @Param("lastName") String lastName);
+            + "OR user.last_name LIKE %:firstName%", nativeQuery = true)
+    public List<User> findLikeName(@Param("firstName") String firstName);
+//    @Query(value = "SELECT * FROM user "
+//            + "WHERE user.first_name LIKE %:firstName% "
+//            + "AND user.last_name LIKE %:lastName%", nativeQuery = true)
+//    public List<User> findLikeName(@Param("firstName") String firstName, @Param("lastName") String lastName);
 
     @Query(value = "SELECT * FROM user "
             + "INNER JOIN user_courses ON user.id = user_courses.user_id "
