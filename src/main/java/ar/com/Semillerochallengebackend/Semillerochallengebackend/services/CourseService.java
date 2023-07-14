@@ -48,7 +48,7 @@ public class CourseService implements CourseServiceInterface {
     @Override
     public CourseDTO save(CourseDTO d) throws ServiceRuntimeException {
         Course course = courseConverter.dtoToEntity(d);
-        courseRepository.save(course);
+        course = courseRepository.save(course);
         return courseConverter.entityToDto(course);
     }
 
