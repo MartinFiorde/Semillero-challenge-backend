@@ -22,17 +22,17 @@
         <!-- end navbar -->
         <div class="container justify-content-center">
 
-            <h1>Registro de usuario</h1>
+            <h1>Buscar usuario por nombre ó apellido</h1>
             <form
                 th:action="@{/user/search}"
                 th:object="${dto}"
                 enctype="multipart/form-data"
                 method="POST"
                 >
-                <input type="text" name="firstName" placeholder="Nombre" th:field="*{firstName}" required/>
+                <input type="text" name="firstName" placeholder="Nombre ó apellido" th:field="*{firstName}" required/>
                 <br>
-                <input type="text" name="lastName" placeholder="Apellido" th:value="*{lastName}" required/>
-                <br>
+                <!--<input type="text" name="lastName" placeholder="Apellido" th:value="*{lastName}" required/>-->
+                <!--<br>-->
                 <input type="submit" value="Aceptar" />
             </form>
             <p

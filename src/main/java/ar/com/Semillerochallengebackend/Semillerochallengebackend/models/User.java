@@ -1,6 +1,6 @@
 package ar.com.Semillerochallengebackend.Semillerochallengebackend.models;
 
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.UserRoleEnum;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.constants.UserRoleEnum;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Column;

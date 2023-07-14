@@ -1,7 +1,7 @@
 package ar.com.Semillerochallengebackend.Semillerochallengebackend.validators;
 
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.CourseStatusEnum;
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.CourseTurnEnum;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.constants.CourseStatusEnum;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.constants.CourseTurnEnum;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.errors.ServiceRuntimeException;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.Course;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.CourseDTO;

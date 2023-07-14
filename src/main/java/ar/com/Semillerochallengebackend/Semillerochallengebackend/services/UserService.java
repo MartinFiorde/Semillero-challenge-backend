@@ -44,6 +44,10 @@ public class UserService implements UserServiceInterface, UserDetailsService {
         return save(d);
     }
 
+    public boolean isFirstUser() {
+        return userRepository.findAll().isEmpty();
+    }
+    
     @Override
     public UserDTO save(UserDTO d) throws ServiceRuntimeException {
         User user = userConverter.dtoToEntity(d);
@@ -103,8 +107,8 @@ public class UserService implements UserServiceInterface, UserDetailsService {
     }
     
     @Override
-    public List<UserDTO> findLikeName(String firstName, String lastName) {
-        return userConverter.entitiesToDto(userRepository.findLikeName(firstName, lastName));
+    public List<UserDTO> findLikeName(String firstName) {
+        return userConverter.entitiesToDto(userRepository.findLikeName(firstName.trim().split(" ", 2)[0]));
     }
 
     @Override
