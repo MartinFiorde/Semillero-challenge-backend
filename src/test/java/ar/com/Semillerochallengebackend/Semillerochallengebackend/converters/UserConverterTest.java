@@ -3,7 +3,7 @@ package ar.com.Semillerochallengebackend.Semillerochallengebackend.converters;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.User;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.converters.UserConverter;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.UserDTO;
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.UserRoleEnum;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.constants.UserRoleEnum;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import static org.junit.Assert.*;

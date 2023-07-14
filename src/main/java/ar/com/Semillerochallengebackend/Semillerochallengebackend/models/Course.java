@@ -1,7 +1,7 @@
 package ar.com.Semillerochallengebackend.Semillerochallengebackend.models;
 
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.CourseStatusEnum;
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.CourseTurnEnum;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.constants.CourseStatusEnum;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.constants.CourseTurnEnum;
 import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;

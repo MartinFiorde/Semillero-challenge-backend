@@ -2,9 +2,7 @@ package ar.com.Semillerochallengebackend.Semillerochallengebackend.controllers;
 
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.UserDTO;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.services.UserService;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.REGISTER;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.INDEX;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.LOGIN;
+import static ar.com.Semillerochallengebackend.Semillerochallengebackend.constants.Constants.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -53,8 +51,8 @@ public class MainController {
     @PreAuthorize("permitAll()")
     public String registerUserPost(ModelMap model, @ModelAttribute UserDTO dto, @RequestParam String passwordConfirm) {
         try {
+            model.put("msg", userService.isFirstUser() ? "Se ha registrado como primer usuario. Cuenta con acceso de administrador. Puede editar roles de acceso de otros usuarios" : "Felicidades! Su cuenta de alumno se ha registrado correctamente");
             userService.register(dto, passwordConfirm);
-            model.put("msg", "Se ha registrado correctamente!");
             return "/index.html";
         } catch (Exception ex) {
             System.out.println(ex.getMessage());

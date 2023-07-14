@@ -3,15 +3,7 @@ package ar.com.Semillerochallengebackend.Semillerochallengebackend.controllers;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.errors.ServiceRuntimeException;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.UserDTO;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.services.UserService;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.LIST;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.DETAIL;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.GET_ID;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.DEACTIVATE;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.ACTIVATE;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.EDIT_PASS;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.EDIT;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.SEARCH;
-import static ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.Constants.USER;
+import static ar.com.Semillerochallengebackend.Semillerochallengebackend.constants.Constants.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -124,7 +116,7 @@ public class UserController {
     @PostMapping(SEARCH) 
     @PreAuthorize("hasAnyRole('ADMIN')")
     public String findLikeName(ModelMap model, @ModelAttribute UserDTO dto) {
-        model.put("dtos", userService.findLikeName(dto.getFirstName(), dto.getLastName()));
+        model.put("dtos", userService.findLikeName(dto.getFirstName()));
         return "user/list.html";
     }
 }

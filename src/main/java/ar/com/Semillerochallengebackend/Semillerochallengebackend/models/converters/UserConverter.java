@@ -2,7 +2,7 @@ package ar.com.Semillerochallengebackend.Semillerochallengebackend.models.conver
 
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.User;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.dto.UserDTO;
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.UserRoleEnum;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.constants.UserRoleEnum;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ParseException;

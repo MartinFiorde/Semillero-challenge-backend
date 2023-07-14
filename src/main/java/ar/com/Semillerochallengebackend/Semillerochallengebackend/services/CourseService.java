@@ -1,6 +1,6 @@
 package ar.com.Semillerochallengebackend.Semillerochallengebackend.services;
 
-import ar.com.Semillerochallengebackend.Semillerochallengebackend.enums.UserRoleEnum;
+import ar.com.Semillerochallengebackend.Semillerochallengebackend.constants.UserRoleEnum;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.converters.CourseConverter;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.errors.ServiceRuntimeException;
 import ar.com.Semillerochallengebackend.Semillerochallengebackend.models.Course;
