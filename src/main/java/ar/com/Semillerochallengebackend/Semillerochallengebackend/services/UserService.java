@@ -51,7 +51,7 @@ public class UserService implements UserServiceInterface, UserDetailsService {
     @Override
     public UserDTO save(UserDTO d) throws ServiceRuntimeException {
         User user = userConverter.dtoToEntity(d);
-        userRepository.save(user);
+        user = userRepository.save(user);
         return userConverter.entityToDto(user);
     }
 
@@ -141,6 +141,13 @@ public class UserService implements UserServiceInterface, UserDetailsService {
     }
     
     public boolean validPasswordSession(String password) throws ServiceRuntimeException {
+        System.out.println("-------------ENTRO");
+        System.out.println("pass: "+password);
+        System.out.println("-------------paramok");
+        System.out.println("pass encrypted: "+ userRepository.findById(sessionId()));
+        System.out.println("-------------pass from repo ok");
+        System.out.println("pass: "+!new BCryptPasswordEncoder().matches(password, userRepository.findById(sessionId()).get().getPassword()));
+        System.out.println("-------------booleano de if ok");
         if (!new BCryptPasswordEncoder().matches(password, userRepository.findById(sessionId()).get().getPassword())) {
             throw new ServiceRuntimeException("La clave anterior no es correcta");
         }
