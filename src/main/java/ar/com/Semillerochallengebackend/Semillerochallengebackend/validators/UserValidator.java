@@ -66,7 +66,7 @@ public class UserValidator {
     }
 
     public String validatePasswords(String password, String passwordConfirm) throws ServiceRuntimeException {
-        if (!StringUtils.nullOrEmpty(password)) {
+        if (StringUtils.nullOrEmpty(password)) {
             throw new ServiceRuntimeException("La clave no puede estar vacia.");
         }
 
